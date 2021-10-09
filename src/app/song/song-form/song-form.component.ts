@@ -22,7 +22,6 @@ export class SongFormComponent implements OnInit {
   }
 
   create(): void {
-    console.log("Song Created!");
     this.songService.create(this.songForm.value).subscribe(res => {
       console.log(res);
     }
