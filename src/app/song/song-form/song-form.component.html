@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <form [formGroup]="songForm" (ngSubmit)="create()">
+                <div class="mb-3">
+                  <label class="form-label">Title</label>
+                  <input type="text" class="form-control" formControlName="title">
+                </div>
+                <div *ngIf="title.touched && title.errors?.required" class="alert alert-danger">
+                    Title is required!
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" rows="3" formControlName="description"></textarea>
+                  </div>
+                  <div *ngIf="description.touched && description.errors?.required" class="alert alert-danger">
+                    Description is required!
+                  </div>
+                <div class="mb-3">
+                  <label class="form-label">ImageUrl</label>
+                  <input type="text" class="form-control" formControlName="imageUrl">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">AudioUrl</label>
+                    <input type="text" class="form-control" formControlName="audioUrl">
+                  </div>
+                  <div *ngIf="audioUrl.touched && audioUrl.errors?.required" class="alert alert-danger">
+                    AudioUrl is required!
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+</div>

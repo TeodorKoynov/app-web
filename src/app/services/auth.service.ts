@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -20,4 +20,20 @@ export class AuthService {
   public register(data: any): Observable<any> {
     return this.http.post(this.registerPath, data)
   }
+
+  public saveToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  public getToken() {
+    return localStorage.getItem('token');
+  }
+
+  public IsAuthenticated(): boolean {
+    if (this.getToken()) {
+      return true;
+    }
+    return false;
+  }
 }
+ 
