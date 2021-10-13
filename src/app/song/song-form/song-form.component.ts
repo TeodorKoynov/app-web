@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SongService } from '../song.service';
 
@@ -9,12 +9,13 @@ import { SongService } from '../song.service';
 })
 export class SongFormComponent implements OnInit {
   songForm: FormGroup; 
-  constructor(private fb:FormBuilder, private songService: SongService) { 
+
+  constructor(private fb:FormBuilder, private songService: SongService, private cd : ChangeDetectorRef) { 
     this.songForm = fb.group({
       'title' : ['', [Validators.required, Validators.maxLength(40)]],
       'description' : ['', [Validators.required, Validators.maxLength(2000)]],
-      'imageUrl' : ['', [Validators.required]],
-      'audioUrl' : ['', [Validators.required]],
+      'imageUrl' : [''],
+      audioUrl : [null, [Validators.required]]
     })
   }
 
@@ -22,11 +23,48 @@ export class SongFormComponent implements OnInit {
   }
 
   create(): void {
+    console.log(this.songForm.value);
+    
     this.songService.create(this.songForm.value).subscribe(res => {
       console.log(res);
     }
       );
   }
+
+  uploadAudio(event: Event) : void {
+    const reader = new FileReader();
+    console.log((event.target as HTMLInputElement).files![0]);
+
+    if ((event.target as HTMLInputElement).files! && (event.target as HTMLInputElement).files!.length) {  
+      var file = (event.target as HTMLInputElement).files![0];
+      reader.readAsDataURL(file);
+        
+      reader.onload = () => {
+        this.songForm.patchValue({
+          audioUrl: reader.result
+       });
+      };
+      this.cd.markForCheck();
+    }
+  }
+
+  uploadImage(event: Event) : void {
+    const reader = new FileReader();
+    console.log((event.target as HTMLInputElement).files![0]);
+
+    if ((event.target as HTMLInputElement).files! && (event.target as HTMLInputElement).files!.length) {  
+      var file = (event.target as HTMLInputElement).files![0];
+      reader.readAsDataURL(file);
+        
+      reader.onload = () => {
+        this.songForm.patchValue({
+          imageUrl: reader.result
+       });
+      };
+      this.cd.markForCheck();
+    }
+  }
+  
 
   get title(): FormControl {
     return this.songForm.get('title') as FormControl;    

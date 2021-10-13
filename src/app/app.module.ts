@@ -13,6 +13,7 @@ import { SongComponent } from './song/song.component';
 import { SongService } from './song/song.service';
 import { AuthGuardService } from '../app/services/auth-guard.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { SongListComponent } from './song/song-list/song-list.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     RegisterComponent,
     SongFormComponent,
     SongComponent,
+    SongListComponent,
   ],
   imports: [
     BrowserModule,
