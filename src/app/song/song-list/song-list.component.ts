@@ -17,13 +17,7 @@ export class SongListComponent implements OnInit {
   ngOnInit(): void {
     this.songService.getAll().subscribe(songs => {
       this.songs = songs;
-      this.convertAudio();
-    });
-  }
-
-  convertAudio() {
-    this.songs?.forEach(song => {      
-      song.trustedAudioFile = this.sanitization.bypassSecurityTrustUrl(song.audioFile);
+      this.songService.convertAudio(songs, this.sanitization);
     });
   }
 }

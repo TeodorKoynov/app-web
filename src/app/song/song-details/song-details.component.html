@@ -1,5 +1,5 @@
-<p>song-list works!</p>
-<div *ngFor="let song of songs">
+<p>song-details works!</p>
+<div>
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" [src]="song.imageUrl">
         <div class="card-body">
@@ -8,10 +8,5 @@
             <source [src]="song.trustedAudioFile">
         </audio>
         </div>
-        <div class="card-footer">
-          <a routerLink="/song/{{ song.id }}" class="btn btn-primary">Details</a>
-        </div>
       </div>
 </div>
-
-  
