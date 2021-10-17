@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Song } from '../models/Song';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,6 +13,9 @@ export class SongService {
   private createPath: string = environment.apiUrl + "/songs";
   private getAllPath: string = environment.apiUrl + "/songs/";
 
+  private songDeletedSubject = new Subject<number>();
+
+  songDeleted = this.songDeletedSubject.asObservable();
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -27,6 +30,11 @@ export class SongService {
 
   public getById(id: string) : Observable<Song> {
     return this.http.get<Song>(this.getAllPath + id);
+  }
+
+  public delete(id: number): Observable<any> {
+    this.songDeletedSubject.next(id);
+    return this.http.delete(this.getAllPath + id);
   }
 
   convertAudio(songs: Array<Song>, sanitization: DomSanitizer) {

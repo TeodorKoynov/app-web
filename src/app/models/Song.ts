@@ -7,5 +7,6 @@ export interface Song {
     imageUrl: string,
     audioFile: string,
     createdOn: Date,
-    trustedAudioFile: SafeUrl
+    trustedAudioFile: SafeUrl,
+    userName: string
 }

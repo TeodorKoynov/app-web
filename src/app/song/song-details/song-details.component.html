@@ -1,12 +1,23 @@
-<p>song-details works!</p>
 <div>
     <div class="card" style="width: 18rem;">
+      <div class="card-title">
+        <p>{{song.userName}}</p>
+      </div>
         <img class="card-img-top" [src]="song.imageUrl">
         <div class="card-body">
           <h5 class="card-title">{{ song.title }}</h5>
           <audio controls *ngIf="song.trustedAudioFile">
             <source [src]="song.trustedAudioFile">
         </audio>
+        </div>
+        <div>
+          <p>{{song.description}}</p>
+          <p>{{song.createdOn}}</p>
+        </div>
+        <div class="card-footer">
+          <a routerLink="/song" class="btn btn-primary">Back</a>
+          <a routerLink="/song" class="btn btn-primary">Edit</a>
+          <button routerLink="/song" class="btn btn-primary" (click)="delete(song.id)">Delete</button>
         </div>
       </div>
 </div>

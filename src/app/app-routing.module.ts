@@ -12,8 +12,9 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'song/create', component: SongFormComponent, canActivate: [AuthGuardService]},
-  {path: 'song', component: SongListComponent, canActivate: [AuthGuardService]},
-  {path: 'song/:id', component: SongDetailsComponent, canActivate: [AuthGuardService]}
+  {path: 'song', component: SongListComponent, canActivate: [AuthGuardService], children: [
+    {path: ':id', component: SongDetailsComponent}
+  ]},
 ];
 
 @NgModule({

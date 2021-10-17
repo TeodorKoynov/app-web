@@ -1,17 +1,29 @@
 <p>song-list works!</p>
-<div *ngFor="let song of songs">
-    <div class="card" style="width: 18rem;">
+
+<div class="custom-row">
+  <div class="custom-col">
+    <div *ngFor="let song of songs">
+      <div class="card" style="width: 18rem;">
         <img class="card-img-top" [src]="song.imageUrl">
+  
         <div class="card-body">
           <h5 class="card-title">{{ song.title }}</h5>
           <audio controls *ngIf="song.trustedAudioFile">
             <source [src]="song.trustedAudioFile">
-        </audio>
+          </audio>
         </div>
+  
         <div class="card-footer">
           <a routerLink="/song/{{ song.id }}" class="btn btn-primary">Details</a>
+          <a routerLink="/song" class="btn btn-primary">Edit</a>
+          <a routerLink="/song" class="btn btn-primary" (click)="delete(song.id)">Delete</a>
         </div>
-      </div>
-</div>
-
   
+      </div>
+    </div>
+  </div>
+  
+  <div class="custom-col-2">
+    <router-outlet></router-outlet>
+  </div>
+</div>

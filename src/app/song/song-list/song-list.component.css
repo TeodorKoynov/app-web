@@ -1,0 +1,13 @@
+.custom-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.custom-col-2 {
+    position: fixed;
+    left: 50%;
+    top: 10%;
+    margin: 0 auto;
+}

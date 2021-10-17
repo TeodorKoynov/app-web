@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Song } from '../../models/Song';
 import { SongService } from '../song.service';
 
@@ -13,7 +13,9 @@ export class SongDetailsComponent implements OnInit {
   id: string = '';
   song!: Song;
 
-  constructor(private route: ActivatedRoute, 
+  
+  constructor(private route: ActivatedRoute,
+    private router: Router, 
     private songService: SongService,
      private sanitization: DomSanitizer) { 
 
@@ -25,10 +27,12 @@ export class SongDetailsComponent implements OnInit {
       this.songService.getById(this.id).subscribe(res => {
         this.songService.convertSingleAudio(res, this.sanitization);
         this.song = res;  
-        console.log(this.song);
-              
+        console.log(this.song);   
       });
     })
   }
 
+  delete(id: number): void {
+    this.songService.delete(id).subscribe();
+  }
 }
