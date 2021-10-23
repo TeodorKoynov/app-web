@@ -15,6 +15,7 @@ import { AuthGuardService } from '../app/services/auth-guard.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SongListComponent } from './song/song-list/song-list.component';
 import { SongDetailsComponent } from './song/song-details/song-details.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { SongDetailsComponent } from './song/song-details/song-details.component
     SongComponent,
     SongListComponent,
     SongDetailsComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,
