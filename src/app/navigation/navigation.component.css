@@ -1,15 +1,15 @@
 .navigation {
     position: fixed;
     height: 100%;
-    width: 20%;
+    width: 250px;
     padding-top: 20px;
     justify-content: left;
-    background-color: gainsboro;
+    background-color: rgb(245, 245, 245);
 }
 
 .title {
-    margin-left: 50px;
-    margin-bottom: 80px;
+    margin-left: 16%;
+    margin-bottom: 20%;
     color: green;
     font-size: x-large;
 }
@@ -23,19 +23,46 @@ ul ul li {
 }
 
 .links {
-    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .link {
-    margin-top: 10px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2.8rem;
+    margin: 0.1rem 0;
     cursor: pointer;
 }
 
-.link-content {
-    margin-left: 10px;
+.link:hover {
+    border-left: solid 0.3vw green;
+    background-image: linear-gradient(to right, #9ed8a8 , rgb(233, 233, 233), rgb(233, 233, 233), rgb(233, 233, 233), rgb(233, 233, 233));
+    background-color: lightgreen;
+    transition: all ease-in-out 250ms;
 }
 
-a {
-    color: black;
+.svg {
+    width: 20px;
+    margin-right: 5%;
+    margin-left: 16%;
+    fill: #999;
+}
+
+.link:hover .svg {
+    fill: #00a81c;
+}
+
+.link a {
+    font-size: 14px;
+    color: #999;
     text-decoration: none;
+    text-transform: uppercase;
+}
+
+.link:hover a {
+    color: #189a2e;
 }
