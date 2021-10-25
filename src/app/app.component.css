@@ -1,5 +1,3 @@
 .main-container {
-    padding-top: 20px;
-    padding-bottom: 60px;
-    margin-left: 270px;
+    padding: 60px 0 60px 270px;
 }

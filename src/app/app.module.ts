@@ -16,6 +16,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SongListComponent } from './song/song-list/song-list.component';
 import { SongDetailsComponent } from './song/song-details/song-details.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     SongListComponent,
     SongDetailsComponent,
     NavigationComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
