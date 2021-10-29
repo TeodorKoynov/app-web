@@ -17,6 +17,7 @@ import { SongListComponent } from './song/song-list/song-list.component';
 import { SongDetailsComponent } from './song/song-details/song-details.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HeaderComponent } from './header/header.component';
+import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { HeaderComponent } from './header/header.component';
     SongDetailsComponent,
     NavigationComponent,
     HeaderComponent,
+    SongTopChartComponent,
   ],
   imports: [
     BrowserModule,

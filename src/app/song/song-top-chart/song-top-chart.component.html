@@ -1,0 +1,29 @@
+<div>
+    <div></div>
+    <div class="song-top-chart">
+        <div class="song-top-chart-title">Billboard Topchart</div>
+        <div class="song-top-chart-content">
+            <div class="song" *ngFor="let song of songs">
+                <div class="song-tumbnail">
+                    <div>
+                        <img class="song-img" [src]="song.imageUrl">
+                    </div>
+                    <div class="audio-player">
+                        <audio controls *ngIf="song.trustedAudioFile">
+                            <source [src]="song.trustedAudioFile">
+                        </audio>
+                    </div>
+                </div>
+                <div class="credentials">
+                    <h5 class="song-title">{{ song.title }}</h5>
+                    <div class="wrapper">
+                        <a class="song-creator">{{ song.userName}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="song-most-popular">
+    </div>
+</div>
+
