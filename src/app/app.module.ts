@@ -18,6 +18,7 @@ import { SongDetailsComponent } from './song/song-details/song-details.component
 import { NavigationComponent } from './navigation/navigation.component';
 import { HeaderComponent } from './header/header.component';
 import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.component';
+import { MusicPlayerComponent } from './music-player/music-player.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.comp
     NavigationComponent,
     HeaderComponent,
     SongTopChartComponent,
+    MusicPlayerComponent,
   ],
   imports: [
     BrowserModule,

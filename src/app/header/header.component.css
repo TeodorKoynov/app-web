@@ -8,6 +8,11 @@
     justify-content: space-between;
 }
 
+.search-bar-container {
+    display: flex;
+    align-items: center;
+}
+
 .search-bar {
     width: 600px;
     outline: none;
