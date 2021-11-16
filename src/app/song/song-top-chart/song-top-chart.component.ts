@@ -20,8 +20,20 @@ export class SongTopChartComponent implements OnInit {
   fetchSongs() {
     this.songService.getAll().subscribe(songs => {
       this.songs = songs;
-      console.log(this.songs)
+      console.log(this.songs); // remove
       this.songService.convertAudio(songs, this.sanitization);
     });
+  }
+
+  LoadSong(songId: number, playlistId: number | null): void {
+    var currentSongId = songId.toString();
+    var currentPlaylistId = "";
+
+    if (playlistId !== null)
+    {
+      currentPlaylistId = playlistId.toString();
+    }
+
+    this.songService.loadSong(currentSongId, currentPlaylistId);
   }
 }

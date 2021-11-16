@@ -12,13 +12,11 @@ import { SongService } from '../song.service';
 export class SongDetailsComponent implements OnInit {
   id: string = '';
   song!: Song;
-
   
   constructor(private route: ActivatedRoute,
     private router: Router, 
     private songService: SongService,
-     private sanitization: DomSanitizer) { 
-
+    private sanitization: DomSanitizer) { 
   }
 
   ngOnInit(): void {
