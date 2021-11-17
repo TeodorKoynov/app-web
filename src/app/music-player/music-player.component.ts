@@ -16,12 +16,14 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   playlistId:string = '';
   playlistIdSubscription!: Subscription;
 
-  isPlaying? : boolean;
+  isPlaying? : boolean = false;
   song : Song | null = null;
 
   constructor(private songService: SongService,
     private sanitization: DomSanitizer) {
-    this.songService.getById(this.songId).subscribe(song => this.song = song);
+    this.songService.getById(this.songId).subscribe(song => {
+      console.log(song);
+    });
    }
 
   ngOnInit(): void {
@@ -33,17 +35,13 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.songService.convertSingleAudio(res, this.sanitization);
           this.song = res;  
-          console.log(this.song);  
+          console.log(res);  
         })
       });
     
     this.playlistIdSubscription = this.songService
       .currentPlaylistId
       .subscribe(playlistId => this.playlistId = playlistId);
-
-    console.log(this.songId)
-    console.log(this.playlistId)
-
   }
 
   ngOnDestroy(): void {
@@ -53,20 +51,20 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
 
   playSong() {
- //   this.musicPlayerContainer.classList.add('play');
-
   }
 
   pauseSong() {
-
   }
 
   playOrPauseSong() {
- //   this.isPlaying = this.musicPlayerContainer.classList.contains('play');
+    console.log(this.isPlaying)
+    console.log(this.song)
 
     if (this.isPlaying) {
+      this.isPlaying = false;
       this.pauseSong()
     } else {
+      this.isPlaying = true;
       this.playSong() 
     }
   }
