@@ -35,7 +35,7 @@ export class SongTopChartComponent implements OnInit {
     {
       currentPlaylistId = playlistId.toString();
     }
-    this.togglePlayingSong(songId);
+   // this.togglePlayingSong(songId);
 
     this.songService.loadSong(currentSongId, currentPlaylistId);
   }

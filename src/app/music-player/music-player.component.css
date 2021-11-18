@@ -159,3 +159,7 @@ a {
     width: 100%;
     transition: width 0.1s linear;
 }
+
+.hidden{
+    display: none;
+}

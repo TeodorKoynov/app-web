@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
@@ -32,8 +31,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       .currentSongId
       .subscribe(songId => {
 
-        console.log(this.audioElementRef.nativeElement);
-
         console.log(songId); ////////////
         
         if (songId !== "")
@@ -66,9 +63,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   playSong() {  
-    this.isPlaying = true;
-    console.log("PlaySOng");
-    
+    this.isPlaying = true;    
     this.audioElementRef.nativeElement.play();
   }
 

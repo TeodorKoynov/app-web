@@ -48,6 +48,10 @@ export class SongService {
     this.playlistId.next(playlist);
   }
 
+  public GetLastPlayedSong() {
+    // To implement
+  }
+
   convertAudio(songs: Array<Song>, sanitization: DomSanitizer) {
     songs?.forEach(song => {      
       song.trustedAudioFile = sanitization.bypassSecurityTrustUrl(song.audioFile);

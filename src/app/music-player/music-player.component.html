@@ -1,4 +1,4 @@
-<div *ngIf="song != null">
+<div [ngClass]="{'hidden' : song == null}">
     <div class="music-player-container">
         <div class="music-player-cointainer-content">
     
@@ -37,17 +37,17 @@
             </div>
     
             <audio id="audio" alt="music" #audio>
-                <source [src]="song.trustedAudioFile">
+                <source [src]="song?.trustedAudioFile">
             </audio>
 
     
             <div class="music-info">
                 <div class="img-container">
-                    <img class="img" src="{{ song.imageUrl }}" alt="music-cover">
+                    <img class="img" src="{{ song?.imageUrl }}" alt="music-cover">
                 </div>
                 <div class="credentials">
-                    <h5 class="title">{{ song.title }}</h5>
-                    <a class="creator"> {{ song.userName }}</a>
+                    <h5 class="title">{{ song?.title }}</h5>
+                    <a class="creator">{{ song?.userName }}</a>
                 </div>
             </div>
     
