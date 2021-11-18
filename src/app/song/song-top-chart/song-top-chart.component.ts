@@ -11,6 +11,8 @@ import { Song} from '../../models/Song';
 export class SongTopChartComponent implements OnInit {
   songs?: Array<Song>
   audioFile: any;
+  currentSongId?: number;
+
   constructor(private songService: SongService, private sanitization: DomSanitizer) { }
 
   ngOnInit(): void {
@@ -33,7 +35,12 @@ export class SongTopChartComponent implements OnInit {
     {
       currentPlaylistId = playlistId.toString();
     }
+    this.togglePlayingSong(songId);
 
     this.songService.loadSong(currentSongId, currentPlaylistId);
+  }
+
+  togglePlayingSong(songId: number) {
+    
   }
 }

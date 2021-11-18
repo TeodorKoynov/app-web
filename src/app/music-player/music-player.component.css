@@ -33,20 +33,23 @@
 .action-btn-round {
 
     display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #1db954;
     border-radius: 32px;
-    align-items: center;
+    width: 40px;
 }
 
 .action-btn-round i {
-
     color: rgb(255, 255, 255);
 }
 
 img {
+    object-fit: cover;  
+    width: 100%;
     cursor: pointer;
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
 }
 
 .music-info {

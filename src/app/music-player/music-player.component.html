@@ -7,9 +7,10 @@
                     <i class="fas fa-backward"></i>
                 </button>
                 <button (click)="playOrPauseSong()" id="play" class="action-btn action-btn-round">
-                    <i ngClass="{'fas fa-play': this.isPlaying == null,
-                                'fas fa-stop' : this.isPlaying != null}" 
-                                class="fas fa-play"></i>
+                    <i [ngClass]="{'fa-play' : (this.isPlaying === false),
+                                'fa-pause' : this.isPlaying}"
+                                class="fas">
+                    </i>
                 </button>
                 <button id="next" class="action-btn">
                     <i class="fas fa-forward"></i>
@@ -35,15 +36,14 @@
                 </div>
             </div>
     
-            <ng-template [ngIf]="song != null">
-                <audio id="audio" alt="music" *ngIf="song.trustedAudioFile">
-                    <source [src]="song.trustedAudioFile">
-                </audio>
-            </ng-template>
+            <audio id="audio" alt="music" #audio>
+                <source [src]="song.trustedAudioFile">
+            </audio>
+
     
             <div class="music-info">
                 <div class="img-container">
-                    <img id="cover" src="https://f4.bcbits.com/img/a4139357031_10.jpg" alt="music-cover">
+                    <img class="img" src="{{ song.imageUrl }}" alt="music-cover">
                 </div>
                 <div class="credentials">
                     <h5 class="title">{{ song.title }}</h5>
