@@ -44,35 +44,11 @@
                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><g id="search"><path d="M29.71,28.29l-6.5-6.5-.07,0a12,12,0,1,0-1.39,1.39s0,.05,0,.07l6.5,6.5a1,1,0,0,0,1.42,0A1,1,0,0,0,29.71,28.29ZM14,24A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z"/></g></svg>
                 <a class="link-content"> Browse </a>
             </li>
-            <li class="link">
+            <li class="link" routerLink="/topchart">
                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"><defs><path id="a" d="M-22 2.24h42V22h-42z"/></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"/></clipPath><path clip-path="url(#b)" d="M16.543 8.028c-.023 1.503-.523 3.538-2.867 4.327.734-1.746.846-3.417.326-4.979-.695-2.097-3.014-3.735-4.557-4.627-.527-.306-1.203.074-1.193.683.02 1.112-.318 2.737-1.959 4.378C4.107 9.994 3 12.251 3 14.517 3 17.362 5 21 9 21c-4.041-4.041-1-7.483-1-7.483C8.846 19.431 12.988 21 15 21c1.711 0 5-1.25 5-6.448 0-3.133-1.332-5.511-2.385-6.899-.347-.458-1.064-.198-1.072.375"/></svg>
-                <a routerLink="/topchart" class="link-content"> Top Chart </a>
+                <a class="link-content"> Top Chart </a>
             </li>
         </ul>
     </nav>
-    <div class="playlists-section">
-        <ul class="playlists">
-            <li>
-                <div class="playlist bold">
-                    <a class="playlist-content">Create Playlist</a>                    
-                </div>
-            </li>
-            <div class="separator"></div>
-            <li>
-                <div class="playlist">
-                    <a class="playlist-content">Playlist #1</a>
-                </div>
-            </li>
-            <li>
-                <div class="playlist">
-                    <a class="playlist-content">Playlist #2</a>
-                </div>
-            </li>
-            <li>
-                <div class="playlist">
-                    <a class="playlist-content">Playlist #3</a>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <app-playlist></app-playlist>
 </div>

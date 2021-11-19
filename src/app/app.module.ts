@@ -21,6 +21,7 @@ import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.comp
 import { MusicPlayerComponent } from './music-player/music-player.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { PlaylistService } from './playlist/playlist.service';
+import { PlaylistDetailsComponent } from './playlist/playlist-details/playlist-details.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { PlaylistService } from './playlist/playlist.service';
     SongTopChartComponent,
     MusicPlayerComponent,
     PlaylistComponent,
+    PlaylistDetailsComponent,
   ],
   imports: [
     BrowserModule,

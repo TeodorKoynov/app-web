@@ -7,6 +7,7 @@ import { SongFormComponent } from './song/song-form/song-form.component';
 import { SongListComponent } from './song/song-list/song-list.component';
 import { SongDetailsComponent } from './song/song-details/song-details.component';
 import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.component';
+import { PlaylistDetailsComponent } from './playlist/playlist-details/playlist-details.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'song', component: SongListComponent, canActivate: [AuthGuardService], children: [
     {path: ':id', component: SongDetailsComponent}
   ]},
+  {path: 'playlist/:id', component: PlaylistDetailsComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

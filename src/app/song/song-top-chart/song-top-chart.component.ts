@@ -19,7 +19,7 @@ export class SongTopChartComponent implements OnInit {
     this.fetchSongs();
   }
 
-  fetchSongs() {
+  fetchSongs(): void {
     this.songService.getAll().subscribe(songs => {
       this.songs = songs;
       console.log(this.songs); // remove

@@ -1,0 +1,47 @@
+ul,
+ul li,
+ul ul li {
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
+.playlist.bold {
+    font-weight: bold;
+    cursor: pointer;
+    transition: all ease-in-out 2s;
+}
+
+.playlist {
+    padding-left: 40px;
+}
+
+.playlist-content {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    cursor: default;
+}
+
+.playlist.bold .playlist-content {
+    transition: all ease-in-out 200ms;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.playlist a {
+    font-size: 14px;
+    color: #999;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.playlist:hover a.playlist-content {
+    color: rgb(85, 85, 85);
+}
+
+.separator {
+    border-top: 1px solid #CCC;
+    width: 80%;
+    margin: 6px auto;
+}

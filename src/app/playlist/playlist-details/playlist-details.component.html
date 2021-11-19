@@ -1,0 +1,21 @@
+<div class="playlist-container">
+    <div class="playlist-info">
+        <div>
+            <img class="img" [src]="playlist.songs[0].imageUrl">
+        </div>
+        <div class="credentials">
+            <div class="playlist-title">{{playlist.title}}</div>
+            <div class="playlist-information">
+                <div class="creator">{{playlist.creatorName}}</div>
+                <div class="separator"></div>
+                <div class="description">{{playlist.releaseYear}}</div>
+                <div class="separator"></div>
+                <div class="songs-count">{{playlist.songCount}} songs</div>
+            </div>
+        </div>
+    </div>
+    <div class="controls">
+        <button class="action-btn action-btn-round">
+            <i class="fas fa-play"></i>
+        </button>
+</div>

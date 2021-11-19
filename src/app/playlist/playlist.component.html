@@ -1,1 +1,15 @@
-<p>playlist works!</p>
+<div class="playlists-section">
+    <ul class="playlists">
+        <li>
+            <div class="playlist bold">
+                <a class="playlist-content">Create Playlist</a>                    
+            </div>
+        </li>
+        <div class="separator"></div>
+        <li *ngFor="let playlist of playlists">
+            <div class="playlist">
+                <a class="playlist-content" routerLink="playlist/{{playlist.id}}">{{playlist.title}}</a>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Song } from '../../models/Song';
 import { SongService } from '../song.service';
 
@@ -13,8 +13,7 @@ export class SongDetailsComponent implements OnInit {
   id: string = '';
   song!: Song;
   
-  constructor(private route: ActivatedRoute,
-    private router: Router, 
+  constructor(private route: ActivatedRoute, 
     private songService: SongService,
     private sanitization: DomSanitizer) { 
   }
