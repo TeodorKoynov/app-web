@@ -62,6 +62,14 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.playlistIdSubscription.unsubscribe();
   }
 
+  nextSong() {
+    
+  }
+
+  prevSong() {
+
+  }
+
   playSong() {  
     this.isPlaying = true;    
     this.audioElementRef.nativeElement.play();

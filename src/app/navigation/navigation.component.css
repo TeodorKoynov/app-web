@@ -67,3 +67,42 @@ ul ul li {
 .link:hover a {
     color: #189a2e;
 }
+
+.playlist.bold {
+    font-weight: bold;
+    cursor: pointer;
+    transition: all ease-in-out 2s;
+}
+
+.playlist {
+    padding-left: 40px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: default;
+}
+
+.playlist-content {
+    display: flex;
+}
+
+.playlist.bold .playlist-content {
+    transition: all ease-in-out 200ms;
+
+}
+
+.playlist a {
+    font-size: 14px;
+    color: #999;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.playlist:hover a.playlist-content {
+    color: rgb(85, 85, 85);
+}
+
+.separator {
+    border-top: 1px solid #CCC;
+    width: 80%;
+    margin: 6px auto;
+}

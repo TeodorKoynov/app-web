@@ -19,6 +19,8 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { HeaderComponent } from './header/header.component';
 import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.component';
 import { MusicPlayerComponent } from './music-player/music-player.component';
+import { PlaylistComponent } from './playlist/playlist.component';
+import { PlaylistService } from './playlist/playlist.service';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { MusicPlayerComponent } from './music-player/music-player.component';
     HeaderComponent,
     SongTopChartComponent,
     MusicPlayerComponent,
+    PlaylistComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { MusicPlayerComponent } from './music-player/music-player.component';
   providers: [
     AuthService, 
     SongService, 
+    PlaylistService,
     AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,

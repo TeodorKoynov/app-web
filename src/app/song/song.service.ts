@@ -16,8 +16,8 @@ export class SongService {
   private playlistId = new BehaviorSubject('');
   currentPlaylistId = this.playlistId.asObservable();
 
-  private createPath: string = environment.apiUrl + "/songs";
   private getAllPath: string = environment.apiUrl + "/songs/";
+  private createPath: string = environment.apiUrl + "/songs";
 
   private songDeletedSubject = new Subject<number>();
 
@@ -46,10 +46,6 @@ export class SongService {
   public loadSong(songId: string, playlist: string) {
     this.songId.next(songId);
     this.playlistId.next(playlist);
-  }
-
-  public GetLastPlayedSong() {
-    // To implement
   }
 
   convertAudio(songs: Array<Song>, sanitization: DomSanitizer) {
