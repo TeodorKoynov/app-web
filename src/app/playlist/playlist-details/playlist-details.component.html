@@ -32,46 +32,14 @@
             </div>
         </div>
 
-        <div class="table-row">
+        <div *ngFor="let song of playlist.songs" class="table-row">
             <div class="table-col-group">
-                <div class="table-col song-index">1</div>
+                <div class="table-col song-index">{{song.index}}</div>
                 <i class="fas fa-play none"></i>
-                <img class="img img-small" [src]="playlist.songs[0].imageUrl">
+                <img class="img img-small" [src]="song.imageUrl">
                 <div class="table-col song-info">
-                    <div class="song-title">Happy</div>
-                    <div class="song-author">Test</div>
-                </div>
-            </div>
-            <div class="table-col-group">
-                <div class="table-col time">1:36</div>
-                <svg role="img" height="32" width="32" viewBox="0 0 32 32" class="svg"><path d="M5.998 13.999A2 2 0 105.999 18a2 2 0 00-.001-4zm10.001 0A2 2 0 1016 18a2 2 0 000-4zm10.001 0A2 2 0 1026.001 18 2 2 0 0026 14z"></path></svg>
-            </div>
-        </div>
-
-        <div class="table-row">
-            <div class="table-col-group">
-                <div class="table-col song-index">1</div>
-                <i class="fas fa-play none"></i>
-                <img class="img img-small" [src]="playlist.songs[0].imageUrl">
-                <div class="table-col song-info">
-                    <div class="song-title">Happy</div>
-                    <div class="song-author">Test</div>
-                </div>
-            </div>
-            <div class="table-col-group">
-                <div class="table-col time">1:36</div>
-                <svg role="img" height="32" width="32" viewBox="0 0 32 32" class="svg"><path d="M5.998 13.999A2 2 0 105.999 18a2 2 0 00-.001-4zm10.001 0A2 2 0 1016 18a2 2 0 000-4zm10.001 0A2 2 0 1026.001 18 2 2 0 0026 14z"></path></svg>
-            </div>
-        </div>
-
-        <div class="table-row">
-            <div class="table-col-group">
-                <div class="table-col song-index">1</div>
-                <i class="fas fa-play none"></i>
-                <img class="img img-small" [src]="playlist.songs[0].imageUrl">
-                <div class="table-col song-info">
-                    <div class="song-title">Happy</div>
-                    <div class="song-author">Test</div>
+                    <div class="song-title">{{song.title}}</div>
+                    <div class="song-author">{{song.userName}}</div>
                 </div>
             </div>
             <div class="table-col-group">

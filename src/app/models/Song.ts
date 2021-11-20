@@ -9,5 +9,6 @@ export interface Song {
     createdOn: Date,
     trustedAudioFile: SafeUrl,
     userName: string,
-    lenght: number
+    lenght: number,
+    index: number
 }
