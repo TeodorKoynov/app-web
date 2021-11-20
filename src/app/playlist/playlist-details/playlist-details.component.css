@@ -1,3 +1,6 @@
+.playlist-container {
+    padding-right: 20px;
+}
 .playlist-info {
     display: flex;
     flex-direction: row;
@@ -12,7 +15,7 @@
 }
 
 .credentials {
-    width: 75%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,6 +26,7 @@
     font-size: 96px;
     font-weight: 900;
     letter-spacing: -.04em;
+    cursor: default;
 }
 
 .playlist-information {
@@ -43,3 +47,146 @@
     cursor: pointer;
     font-weight: 700;
 }
+
+.creator:hover {
+    text-decoration: underline;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 24px 0;
+}
+
+.action-btn {
+    color: rgb(245, 245, 245);
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.action-btn.round {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1db954;
+    border-radius: 32px;
+    width: 56px;
+    height: 56px;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.table-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 12px;
+}
+
+.table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    border-radius: 4px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+}
+
+.table-col-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.song-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.song-title {
+    font-weight: 500;
+    cursor: default;
+}
+
+.song-author {
+    line-height: 1;
+    color: rgb(112, 112, 112);
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.song-author:hover {
+    text-decoration: underline;
+}
+
+.table-row:hover .song-author {
+    color: #212529;
+}
+
+.img.img-small {
+    width: 40px;
+    height: 40px;
+    margin: 0 8px;
+    padding: 0;
+}
+
+.table-row:hover {
+    background-color: #e9e9e9;
+}
+
+.table-col-group .svg{
+    fill: none;
+}
+
+.table-row:hover .svg {
+    fill: black;
+}
+
+.controls .svg {
+    fill: black;
+    margin-left: 32px;
+}
+
+.controls .svg:hover {
+    fill: rgb(112, 112, 112);
+}
+
+.time {
+    cursor: default;
+}
+
+.table-row .fa-play {
+    padding: 0px 4.315px;
+}
+
+.none {
+    display: none;
+}
+
+.table-row:hover .none {
+    display: block;
+}
+
+.song-index {
+    padding: 0 8px;
+}
+
+.table-row:hover .song-index {
+    display: none;
+}
+
