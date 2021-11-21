@@ -31,7 +31,6 @@
 }
 
 .action-btn-round {
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,8 +104,7 @@ a {
     border-radius: 5px;
     cursor: pointer;
     height: 100%;
-    width: 50%;
-    transition: width 0.1s linear;
+    width: 0%;
 }
 
 .current-time {

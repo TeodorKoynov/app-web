@@ -11,6 +11,7 @@ import { SongService } from '../song/song.service';
 })
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
+
   songId:string = '';
   songIdSubscription!: Subscription;
 
@@ -19,6 +20,10 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   isPlaying? : boolean = false;
   song: Song | null = null;
+
+  currentTime?: number;
+  duration?: number;
+  progressPercent? : number;
 
   constructor(private songService: SongService, private sanitization: DomSanitizer) {
     this.songService.getById(this.songId).subscribe(song => {
@@ -42,10 +47,11 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
             this.song = res;
 
             this.audioElementRef.nativeElement.load();
+            
+            this.progressPercent = 0;
             this.playSong();
 
             console.log(this.audioElementRef.nativeElement);
-            
             
             console.log(res);  ////////////
           })
@@ -90,5 +96,14 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.isPlaying)
+  }
+
+  updateProgress() {
+    this.duration = this.audioElementRef.nativeElement.duration;
+    this.currentTime = this.audioElementRef.nativeElement.currentTime;
+    console.log(this.duration);
+    console.log(this.currentTime);
+
+    this.progressPercent = (this.currentTime / this.duration) * 100;
   }
 }

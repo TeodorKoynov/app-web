@@ -21,7 +21,7 @@
                 <div class="time-container">
                     <div class="current-time">0:00</div>
                     <div class="progress-container">
-                        <div class="custom-progress-bar"></div>
+                        <div [style.width.%]="progressPercent" class="custom-progress-bar"></div>
                     </div>
                     <div class="total-time">0:00</div>
                 </div>
@@ -36,7 +36,7 @@
                 </div>
             </div>
     
-            <audio id="audio" alt="music" #audio>
+            <audio (timeupdate)="updateProgress()" id="audio" alt="music" #audio>
                 <source [src]="song?.trustedAudioFile">
             </audio>
 
