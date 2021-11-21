@@ -11,6 +11,8 @@ import { SongService } from '../song/song.service';
 })
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
+  @ViewChild('progressBarContainer') progressBarContainerElementRef!: ElementRef<HTMLElement>;
+
 
   songId:string = '';
   songIdSubscription!: Subscription;
@@ -24,6 +26,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   currentTime?: number;
   duration?: number;
   progressPercent? : number;
+
+  durationDisplay: string = "0:00";
+  currentTimeDisplay?: string = "0:00";
 
   constructor(private songService: SongService, private sanitization: DomSanitizer) {
     this.songService.getById(this.songId).subscribe(song => {
@@ -44,16 +49,18 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
           this.songService.getById(songId)
           .subscribe(res => {
             this.songService.convertSingleAudio(res, this.sanitization);
-            this.song = res;
-
-            this.audioElementRef.nativeElement.load();
             
+        //    console.log(this.duration);
+            
+            this.song = res;
+            this.audioElementRef.nativeElement.load();
             this.progressPercent = 0;
+
             this.playSong();
 
-            console.log(this.audioElementRef.nativeElement);
+          //  console.log(this.audioElementRef.nativeElement);
             
-            console.log(res);  ////////////
+          //  console.log(res);  ////////////
           })
         }
       });
@@ -98,12 +105,43 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     console.log(this.isPlaying)
   }
 
+  setProgress(event: MouseEvent) {
+    const width = this.progressBarContainerElementRef.nativeElement.clientWidth;
+    const clickX = event.offsetX;
+
+    if (this.duration === undefined) {
+      this.duration = 0;
+    }
+    
+    this.audioElementRef.nativeElement.currentTime = (clickX / width) * this.duration;
+  }
+
   updateProgress() {
     this.duration = this.audioElementRef.nativeElement.duration;
     this.currentTime = this.audioElementRef.nativeElement.currentTime;
+
+    this.progressPercent = (this.currentTime / this.duration) * 100;
+
     console.log(this.duration);
     console.log(this.currentTime);
 
-    this.progressPercent = (this.currentTime / this.duration) * 100;
+    if (!isNaN(this.duration))
+    {
+      this.durationDisplay = this.formatTime(this.duration);
+      this.currentTimeDisplay = this.formatTime(this.currentTime);
+    }
+  }
+
+  formatTime(time: number): string {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time - (minutes * 60));
+
+    if (seconds < 10) {
+      const result = minutes.toString() + ":0" + seconds.toString();
+      return result;
+    }
+
+    const result = minutes.toString() + ":" + seconds.toString();
+    return result;
   }
 }

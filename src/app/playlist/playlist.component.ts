@@ -20,7 +20,6 @@ export class PlaylistComponent implements OnInit {
     this.playlistService.getAll().subscribe(playlists => {
       this.playlists = playlists
       console.log(playlists);
-      
     });
   }
 }

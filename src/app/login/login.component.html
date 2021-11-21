@@ -1,23 +1,44 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4 offset-md-4">
-            <form [formGroup]="loginForm" (ngSubmit)='login()'>
-                <div class="mb-3">
-                  <label class="form-label">Username</label>
-                  <input type="text" class="form-control" formControlName="username">
-                </div>
-                <div *ngIf="username.touched && username.errors?.required" class="alert alert-danger">
-                  Username is required!
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Password</label>
-                  <input type="password" class="form-control" formControlName="password">
-                </div>
-                <div *ngIf="password.touched && password.errors?.required" class="alert alert-danger">
-                  Password is required!
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+<div class="warpper">
+  <div class="login-container">
+    <div class="content">
+      <div class="svg-warpper">
+        <svg class="svg" xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="48.2 220.36 251.44 71.23">
+          <path font-size="100" letter-spacing="0" font-family="Lilita One" fill="#3e454f" data-uid="o_el0k1g25l_7" d="M168.047 272.8934q-4.4804 0-4.4804-1.0068L162.5094 251.7l-6.1415 20.4383q-.2014.6041-3.4232.6041t-3.3225-.5538l-6.343-20.69-.7047 20.086q-.0503.755-1.913 1.032-1.8625.2768-3.0959.2768-1.2333 0-2.3912-.151-2.4163-.3524-2.366-1.2585l1.1579-32.7215q0-1.2082 6.1415-1.2082 1.8123 0 4.43.277 2.6177.2768 2.9198 1.0822l5.6381 15.8574 4.9334-15.9077q.453-1.3089 6.947-1.3089 1.8626 0 4.4552.277 2.5925.2768 2.5925.9816l1.46 33.0235q0 .5537-1.9634.8054-1.9633.2517-3.4735.2517Zm16.9647-2.064-8.5579-22.905q0-.5537 4.6062-.5537t4.7572.5034l3.6245 11.8804 3.4735-11.9811q.2014-.4027 3.1212-.4027 6.6953 0 6.3932.6544l-11.83 33.678q-.0504.302-2.7436.302t-5.009-.1762q-2.3156-.1762-2.2149-.4279l4.3796-10.5716Zm27.335.9565-8.8096-33.5269q0-.2517 2.1898-.4782 2.1899-.2266 3.5994-.2266 5.5878 0 5.8395 1.46l4.3293 22.1498 4.0776-22.1499q.302-1.4599 6.2423-1.4599 1.4599 0 3.6749.2014t2.215.453l-8.9104 33.3256q-.2013.8055-2.97 1.0572-4.279.453-7.7777.1762-3.4987-.277-3.7-.9817Zm35.3896-23.9622v24.7173q0 .4028-4.6062.4028t-4.6062-.3524V247.874q0-.3524 4.6062-.3524t4.6062.302Zm0-10.3701v7.4q0 .3524-4.6062.3524t-4.6062-.302v-7.249q0-.5035 4.6062-.5035t4.6062.302Zm4.7823 33.2248v-32.9228q0-.604 4.3545-.604t4.3545.6543v9.7661q2.1646-.4027 3.0708-.4027 10.5715 0 10.5715 12.1321 0 6.7457-3.247 10.3954t-9.2123 3.6497q-5.9654 0-9.892-2.668Zm10.3702-15.656q-.8558 0-1.6612.5538v9.615q.7048.3021 1.485.3021.7803 0 1.5858-.604 1.4095-1.0069 1.4095-4.6817 0-5.1851-2.819-5.1851Zm34.5841 16.4615q-3.1715 1.8626-8.1552 1.8626-4.9837 0-8.4069-3.398-3.4232-3.398-3.4232-9.4137 0-6.0157 3.2974-9.6906 3.2973-3.6749 8.3313-3.6749 5.0341 0 7.7777 2.5674 2.7436 2.5674 2.7436 6.2422 0 8.1552-9.3634 8.1552h-3.4735q0 1.5103.8306 2.0892t2.4415.5789q3.5239 0 6.6953-1.611.0504-.0503.4531.7049 1.2082 2.1646 1.2082 3.6497 0 1.485-.9565 1.938Zm-6.2926-14.5485q0-2.1143-2.064-2.1143-.9564 0-1.636.579-.6796.5788-.6796 1.6863v1.5606h2.7184q1.6612 0 1.6612-1.7116Z"/>
+          <path fill="#00b389" data-type="circle" data-cx="88.385" data-cy="88.385" data-r="88.385" d="M48.2012 256a35.5819 35.5819 0 1 0 71.1638 0 35.5819 35.5819 0 1 0-71.1637 0" data-uid="o_el0k1g25l_8"/>
+          <path d="M83.7796 287.428c17.4418 0 31.5798-14.138 31.5798-31.5798s-14.138-31.5797-31.5798-31.5797S52.2 238.4065 52.2 255.8482s14.138 31.5798 31.5797 31.5798zm0-60.7303c16.0741 0 29.1506 13.0764 29.1506 29.1505 0 3.4106-.6195 6.673-1.7005 9.7169h-27.45c-5.3589 0-9.7169-4.358-9.7169-9.7169s4.358-9.7168 9.7168-9.7168 9.7169 4.358 9.7169 9.7168h2.4292c0-6.6973-5.4487-12.146-12.146-12.146s-12.1461 5.4487-12.1461 12.146 5.4487 12.146 12.146 12.146h26.4663c-1.2316 2.6747-2.8543 5.1233-4.8001 7.2877H83.7796c-10.7152 0-19.4337-8.7184-19.4337-19.4337s8.7185-19.4337 19.4337-19.4337 19.4337 8.7185 19.4337 19.4337h2.4293c0-12.0537-9.8068-21.8629-21.863-21.8629s-21.8629 9.8092-21.8629 21.863 9.8068 21.8628 21.863 21.8628h19.2174c-5.1353 4.5208-11.852 7.2877-19.2175 7.2877-16.074 0-29.1505-13.0765-29.1505-29.1506s13.0764-29.1505 29.1505-29.1505z" fill="#fff" data-uid="o_el0k1g25l_9"/>
+        </svg>
+      </div>
+      <div class="header">
+        <h1>Log in to continue.</h1>
+      </div>
+      <form [formGroup]="loginForm" routerLink="/topchart" (ngSubmit)='login()'>
+        <div class="input-container">
+          <div class="input-group">
+            <div class="input">
+              <input placeholder="Username" type="text" class="form-control" formControlName="username">
+            </div>
+            <div *ngIf="username.touched && username.errors?.required" class="error">
+              Username is required!
+            </div>
+          </div>
+          <div class="input-group">
+            <div class="input">
+              <input placeholder="Password" type="password" class="form-control" formControlName="password">
+            </div>
+            <div *ngIf="password.touched && password.errors?.required" class="error">
+              Password is required!
+            </div>
+          </div>  
         </div>
+        <div class="btn-container">
+          <button type="submit" class="button">LOG IN</button>
+        </div>
+      </form>
+      <div class="info-group">
+        <div class="info" routerLink="/register">
+          <p>Don't have an account? <a>SINGUP</a></p>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

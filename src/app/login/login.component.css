@@ -1,0 +1,120 @@
+.warpper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;    
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.login-container {
+    margin-top: 100px;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+ 
+.content {
+    width: 500px;
+    height: auto;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 40px 80px 35px;
+}
+
+.svg-warpper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.svg {
+    width: 200px;
+    margin-bottom: 25px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 14px;
+    letter-spacing: -.2em;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 5px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin: 5px 0;
+}
+
+input {
+    border-radius: 0;
+}
+
+input:focus {
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+    box-shadow: none;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.button {
+    width: 100%;
+    height: 50px;
+    border-radius: 30px;
+    margin: 10px 0 8px;
+    background-color: black;
+    border: none;
+    color: white;
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+}
+
+.button:hover {
+    margin: 7.5px 0 5.5px;
+    width: calc(100% + 20px);
+    height: 55px;
+    border-radius: 30px;
+}
+
+.error {
+    color: red;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info {
+    cursor: pointer;
+}
+
+.info p {
+    font-weight: 600;
+}
+
+.info p a {
+    font-weight: 700;
+    text-decoration: underline;
+}

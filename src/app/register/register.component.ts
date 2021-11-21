@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup; 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = fb.group({
       'username': ['', [Validators.required]],
       'email': ['', [Validators.required]],
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
   register() {
     return this.authService.register(this.registerForm.value).subscribe(data => {
       console.log(data);
+      this.router.navigate(['topchart'])
     })
   }
 

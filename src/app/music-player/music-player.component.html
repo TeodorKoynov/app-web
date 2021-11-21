@@ -19,11 +19,11 @@
     
             <div class="sound-control-container">
                 <div class="time-container">
-                    <div class="current-time">0:00</div>
-                    <div class="progress-container">
+                    <div class="current-time">{{currentTimeDisplay}}</div>
+                    <div (click)="setProgress($event)" class="progress-container" #progressBarContainer>
                         <div [style.width.%]="progressPercent" class="custom-progress-bar"></div>
                     </div>
-                    <div class="total-time">0:00</div>
+                    <div class="total-time">{{durationDisplay}}</div>
                 </div>
         
                 <div class="volume-container">
