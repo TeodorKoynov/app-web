@@ -87,9 +87,11 @@ input:focus {
     font-weight: 500;
     align-items: center;
     justify-content: center;
+    transition: all ease-in-out 25ms;
 }
 
 .button:hover {
+    font-size: 17px;
     margin: 7.5px 0 5.5px;
     width: calc(100% + 20px);
     height: 55px;

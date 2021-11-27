@@ -16,6 +16,9 @@ export class SongService {
   private playlistId = new BehaviorSubject('');
   currentPlaylistId = this.playlistId.asObservable();
 
+  private isPlayling = new BehaviorSubject(false);
+  isCurrentlyPlaying = this.isPlayling.asObservable();
+
   private getAllPath: string = environment.apiUrl + "/songs/";
   private createPath: string = environment.apiUrl + "/songs";
 
@@ -46,6 +49,11 @@ export class SongService {
   public loadSong(songId: string, playlist: string) {
     this.songId.next(songId);
     this.playlistId.next(playlist);
+    this.isPlayling.next(true);
+  }
+
+  public playOrStop(isPlaying: boolean) {
+    this.isPlayling.next(isPlaying);
   }
 
   convertAudio(songs: Array<Song>, sanitization: DomSanitizer) {

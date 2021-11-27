@@ -13,14 +13,15 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
   @ViewChild('progressBarContainer') progressBarContainerElementRef!: ElementRef<HTMLElement>;
 
-
   songId:string = '';
   songIdSubscription!: Subscription;
 
   playlistId:string = '';
   playlistIdSubscription!: Subscription;
 
-  isPlaying? : boolean = false;
+  isPlaying: boolean = false;
+  isPlayingSubscription!: Subscription;
+
   song: Song | null = null;
 
   currentTime?: number;
@@ -62,6 +63,14 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
             
           //  console.log(res);  ////////////
           })
+
+          this.isPlayingSubscription = this.songService
+          .isCurrentlyPlaying
+          .subscribe(isPlaying => {
+            this.isPlaying = !isPlaying
+            console.log(this.isPlaying);   
+            this.playOrPause();
+          });
         }
       });
     
@@ -73,6 +82,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.songIdSubscription.unsubscribe();
     this.playlistIdSubscription.unsubscribe();
+    this.isPlayingSubscription.unsubscribe();
   }
 
   nextSong() {
@@ -93,15 +103,20 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.audioElementRef.nativeElement.pause();
   }
 
-  playOrPauseSong() {
-    console.log(this.audioElementRef.nativeElement);
-    
+  playOrPause() {
     if (this.isPlaying) {
       this.pauseSong();
     } else {
       this.playSong();
     }
+  }
 
+  playOrPauseSong() {
+    console.log(this.audioElementRef.nativeElement);
+    
+    this.playOrPause();
+
+    this.songService.playOrStop(this.isPlaying);
     console.log(this.isPlaying)
   }
 

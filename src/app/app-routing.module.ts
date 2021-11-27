@@ -8,9 +8,11 @@ import { SongListComponent } from './song/song-list/song-list.component';
 import { SongDetailsComponent } from './song/song-details/song-details.component';
 import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.component';
 import { PlaylistDetailsComponent } from './playlist/playlist-details/playlist-details.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
+  {path: '', component: HomeComponent, canActivate: [AuthGuardService]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'topchart', component: SongTopChartComponent, canActivate: [AuthGuardService]},
