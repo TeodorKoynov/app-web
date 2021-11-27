@@ -33,14 +33,15 @@
         </div>
 
         <div *ngFor="let song of playlist.songs" class="table-row" aria-selected="false"
-         [ngClass]="{'active' : (this.currentSongId === song.id.toString())}">
+         [ngClass]="{'active' : (this.currentSongId === song.id.toString() && this.playlistId === this.loadedPlaylistId)}">
             <div class="table-col-group">
-                <div class="table-col song-index">{{song.index}}</div>
+                <div class="table-col song-index" 
+                [ngClass]="{'hidden' : ((this.currentSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)}">{{song.index}}</div>
+                <img class="gif" *ngIf="((this.currentSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)" src="https://open.scdn.co/cdn/images/equaliser-animated-green.f93a2ef4.gif">
                 <i class="fas none" (click)="playOrPauseSong(song.id)" [ngClass]="{
-                    'fa-play' : ((this.currentSongId !== song.id.toString()) || ((this.currentSongId === song.id.toString()) && !this.isPlaying)),
-                    'fa-pause': ((this.currentSongId === song.id.toString()) && this.isPlaying)
+                    'fa-play' : ((this.currentSongId !== song.id.toString()) || ((this.currentSongId === song.id.toString()) && !this.isPlaying && this.playlistId === this.loadedPlaylistId) || this.playlistId !== this.loadedPlaylistId),
+                    'fa-pause': ((this.currentSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)
                 }">
-                    
                 </i>
                 <img class="img img-small" [src]="song.imageUrl">
                 <div class="table-col song-info">

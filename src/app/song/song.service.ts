@@ -49,7 +49,6 @@ export class SongService {
   public loadSong(songId: string, playlist: string) {
     this.songId.next(songId);
     this.playlistId.next(playlist);
-    this.isPlayling.next(true);
   }
 
   public playOrStop(isPlaying: boolean) {

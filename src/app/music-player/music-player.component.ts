@@ -19,7 +19,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   playlistId:string = '';
   playlistIdSubscription!: Subscription;
 
-  isPlaying: boolean = false;
+  isPlaying: boolean = true;
   isPlayingSubscription!: Subscription;
 
   song: Song | null = null;
@@ -38,37 +38,41 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+
+    console.log("Initializing Music Player");
+    
+
     this.songIdSubscription = this.songService
       .currentSongId
       .subscribe(songId => {
 
-        console.log(songId); ////////////
-        
         if (songId !== "")
         {
+          if (songId !== this.songId && this.isPlayingSubscription !== undefined) 
+          {
+            this.isPlayingSubscription.unsubscribe();
+          }
+
           this.songId = songId
           this.songService.getById(songId)
           .subscribe(res => {
             this.songService.convertSingleAudio(res, this.sanitization);
-            
-        //    console.log(this.duration);
-            
+                        
             this.song = res;
             this.audioElementRef.nativeElement.load();
+            this.isPlaying = true;
             this.progressPercent = 0;
+            this.songService.playOrStop(this.isPlaying);
 
-            this.playSong();
-
-          //  console.log(this.audioElementRef.nativeElement);
-            
-          //  console.log(res);  ////////////
           })
-
+                    
           this.isPlayingSubscription = this.songService
           .isCurrentlyPlaying
           .subscribe(isPlaying => {
-            this.isPlaying = !isPlaying
-            console.log(this.isPlaying);   
+            this.isPlaying = isPlaying
+
+            console.log(this.isPlaying); 
+
             this.playOrPause();
           });
         }
@@ -76,7 +80,12 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     
     this.playlistIdSubscription = this.songService
       .currentPlaylistId 
-      .subscribe(playlistId => this.playlistId = playlistId);
+      .subscribe(playlistId => {
+        this.playlistId = playlistId
+
+        console.log("SongId Subscription => 4");
+        
+      });
   }
 
   ngOnDestroy(): void {
@@ -94,30 +103,24 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   playSong() {  
-    this.isPlaying = true;    
     this.audioElementRef.nativeElement.play();
   }
 
   pauseSong() {
-    this.isPlaying = false;
     this.audioElementRef.nativeElement.pause();
   }
 
   playOrPause() {
     if (this.isPlaying) {
-      this.pauseSong();
-    } else {
       this.playSong();
+    } else {
+      this.pauseSong();
     }
   }
 
-  playOrPauseSong() {
-    console.log(this.audioElementRef.nativeElement);
-    
-    this.playOrPause();
-
+  playOrPauseSong() {    
+    this.isPlaying = !this.isPlaying
     this.songService.playOrStop(this.isPlaying);
-    console.log(this.isPlaying)
   }
 
   setProgress(event: MouseEvent) {
@@ -137,8 +140,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
     this.progressPercent = (this.currentTime / this.duration) * 100;
 
-    console.log(this.duration);
-    console.log(this.currentTime);
+ //   console.log(this.duration);
+ //   console.log(this.currentTime);
 
     if (!isNaN(this.duration))
     {

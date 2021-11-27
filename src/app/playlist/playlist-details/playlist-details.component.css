@@ -206,5 +206,17 @@
     color: black;
 }
 
+.table-row:hover .gif {
+    display: none;
+}
 
+.gif {
+    width: 24.63px;
+    height: 24px;
+    padding: 3.85px;
+}
+
+.hidden {
+    display: none;
+}
 

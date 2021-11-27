@@ -15,6 +15,9 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   playlist!: Playlist;
   playlistId: string = "";
 
+  loadedPlaylistId?: string;
+  loadedPlaylistSubscription!: Subscription;
+
   currentSongId: string = "";
 
   isPlaying: boolean = false;
@@ -36,7 +39,12 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
         .isCurrentlyPlaying
         .subscribe(isPlaying => this.isPlaying = isPlaying);
     })
-  }
+ 
+    this.songService.currentSongId.subscribe(songId => this.currentSongId = songId);
+      
+    this.loadedPlaylistSubscription = this.songService.currentPlaylistId.subscribe(loadedPlaylistId => this.loadedPlaylistId = loadedPlaylistId);
+ 
+ }
 
   ngOnDestroy(): void {
     this.isPlayingSubscription.unsubscribe();
@@ -49,14 +57,18 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   playOrPauseSong(songId: number): void {
-    if (this.currentSongId === songId.toString()) {
+    console.log(this.loadedPlaylistId);
+    console.log(this.playlistId);
+    
+    
+
+    if (this.currentSongId === songId.toString() && this.playlistId === this.loadedPlaylistId) {
       this.isPlaying = !this.isPlaying;
       this.songService.playOrStop(this.isPlaying)
       return;
     } 
-    
-    this.currentSongId = songId.toString();
 
-    this.songService.loadSong(this.currentSongId, this.playlistId);
+    this.currentSongId = songId.toString();    
+    this.songService.loadSong(this.currentSongId, this.playlistId);    
   }
 }
