@@ -15,8 +15,12 @@
         </div>
     </div>
     <div class="controls">
-        <button class="action-btn round">
-            <i class="fas fa-play"></i>
+        <button class="action-btn round" (click)="playOrPauseAlbum()">
+            <i class="fas fa-play"[ngClass]="{
+                'fa-play' : (!this.isPlaying || this.loadedPlaylistId !== this.playlistId),
+                'fa-pause': (this.isPlaying && this.loadedPlaylistId === this.playlistId)
+            }">
+            </i>
         </button>
         <svg role="img" height="32" width="32" viewBox="0 0 32 32" class="svg"><path d="M5.998 13.999A2 2 0 105.999 18a2 2 0 00-.001-4zm10.001 0A2 2 0 1016 18a2 2 0 000-4zm10.001 0A2 2 0 1026.001 18 2 2 0 0026 14z"></path></svg>
     </div>

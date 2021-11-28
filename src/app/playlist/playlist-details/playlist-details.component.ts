@@ -60,8 +60,6 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     console.log(this.loadedPlaylistId);
     console.log(this.playlistId);
     
-    
-
     if (this.currentSongId === songId.toString() && this.playlistId === this.loadedPlaylistId) {
       this.isPlaying = !this.isPlaying;
       this.songService.playOrStop(this.isPlaying)
@@ -70,5 +68,15 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
 
     this.currentSongId = songId.toString();    
     this.songService.loadSong(this.currentSongId, this.playlistId);    
+  }
+
+  playOrPauseAlbum(): void {
+    if (this.currentSongId === undefined || this.playlistId !== this.loadedPlaylistId) {
+      const songId = this.playlist.songs[0].id.toString(); 
+      this.songService.loadSong(songId, this.playlistId);
+      return;
+    }
+
+    this.playOrPauseSong(+this.currentSongId);
   }
 }
