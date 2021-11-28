@@ -3,7 +3,7 @@
         <div class="music-player-cointainer-content">
     
             <div class="navigation">
-                <button id="prev" class="action-btn">
+                <button id="prev" class="action-btn" (click)="prevSong()">
                     <i class="fas fa-backward"></i>
                 </button>
                 <button (click)="playOrPauseSong()" id="play" class="action-btn action-btn-round">
@@ -12,7 +12,7 @@
                                 class="fas">
                     </i>
                 </button>
-                <button id="next" class="action-btn">
+                <button id="next" class="action-btn" (click)="nextSong()">
                     <i class="fas fa-forward"></i>
                 </button>
             </div>

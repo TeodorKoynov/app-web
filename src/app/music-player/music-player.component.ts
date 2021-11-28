@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Song } from '../models/Song';
+import { PlaylistService } from '../playlist/playlist.service';
 import { SongService } from '../song/song.service';
 
 @Component({
@@ -31,10 +32,11 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   durationDisplay: string = "0:00";
   currentTimeDisplay?: string = "0:00";
 
-  constructor(private songService: SongService, private sanitization: DomSanitizer) {
-    this.songService.getById(this.songId).subscribe(song => {
-      console.log(song); ////////////
-    });
+  constructor(private songService: SongService,
+    private playlistService: PlaylistService, 
+    private sanitization: DomSanitizer) {
+
+
    }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         {
           if (songId !== this.songId && this.isPlayingSubscription !== undefined) 
           {
-            this.isPlayingSubscription.unsubscribe();
+            this.isPlayingSubscription.unsubscribe();            
           }
 
           this.songId = songId
@@ -60,19 +62,16 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
                         
             this.song = res;
             this.audioElementRef.nativeElement.load();
-            this.isPlaying = true;
             this.progressPercent = 0;
+            this.isPlaying = true;
             this.songService.playOrStop(this.isPlaying);
-
           })
-                    
+          
           this.isPlayingSubscription = this.songService
           .isCurrentlyPlaying
           .subscribe(isPlaying => {
             this.isPlaying = isPlaying
-
             console.log(this.isPlaying); 
-
             this.playOrPause();
           });
         }
@@ -94,12 +93,22 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.isPlayingSubscription.unsubscribe();
   }
 
-  nextSong() {
-    
+  nextSong() {    
+    this.audioElementRef.nativeElement.pause();
+    this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "next").subscribe(song => {
+      this.isPlayingSubscription.unsubscribe();      
+      this.songService.loadSong(song.id.toString(), this.playlistId);
+      this.audioElementRef.nativeElement.pause();
+    });
   }
 
   prevSong() {
-
+    this.audioElementRef.nativeElement.pause();
+    this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "previous").subscribe(song => {
+      this.isPlayingSubscription.unsubscribe();
+      this.songService.loadSong(song.id.toString(), this.playlistId);
+      this.audioElementRef.nativeElement.pause();
+    });
   }
 
   playSong() {  

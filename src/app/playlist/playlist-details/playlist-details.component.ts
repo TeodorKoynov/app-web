@@ -57,9 +57,6 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   playOrPauseSong(songId: number): void {
-    console.log(this.loadedPlaylistId);
-    console.log(this.playlistId);
-    
     if (this.currentSongId === songId.toString() && this.playlistId === this.loadedPlaylistId) {
       this.isPlaying = !this.isPlaying;
       this.songService.playOrStop(this.isPlaying)

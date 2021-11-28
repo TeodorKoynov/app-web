@@ -38,17 +38,17 @@ export class PlaylistService {
   }
 
   public addSongToPlaylist(playlistId: string, songId: string): Observable<any> {
-    const urlPath = `${this.getAllPath} + ${playlistId} + ${this.songPath} + ${songId}`;
+    const urlPath = `${this.getAllPath}/${playlistId}/${this.songPath}/${songId}`;
     return this.http.post(urlPath, "");
   }
 
   public removeSongFromPlaylist(playlistId: string, songId: string): Observable<any> {
-    const urlPath = `${this.getAllPath} + ${playlistId} + ${this.songPath} + ${songId}`;
+    const urlPath = `${this.getAllPath}/${playlistId}/${this.songPath}/${songId}`;
     return this.http.delete(urlPath);
   }
 
-  public SongFromPlaylistByAction(playlistId: string, songId: string, action: string): Observable<object> {
-    const urlPath = `${this.getAllPath} + ${playlistId} + ${this.songPath} + ${songId} + ?action= + ${action}`;
-    return this.http.get(urlPath);
+  public SongFromPlaylistByAction(playlistId: string, songId: string, action: string): Observable<Song> {
+    const urlPath = `${this.getAllPath}${playlistId}${this.songPath}${songId}?action=${action}`;
+    return this.http.get<Song>(urlPath);
   }
 }
