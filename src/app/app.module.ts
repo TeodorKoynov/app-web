@@ -23,6 +23,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { PlaylistService } from './playlist/playlist.service';
 import { PlaylistDetailsComponent } from './playlist/playlist-details/playlist-details.component';
 import { HomeComponent } from './home/home.component';
+import { PlaylistEditComponent } from './playlist/playlist-edit/playlist-edit.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { HomeComponent } from './home/home.component';
     PlaylistComponent,
     PlaylistDetailsComponent,
     HomeComponent,
+    PlaylistEditComponent,
   ],
   imports: [
     BrowserModule,

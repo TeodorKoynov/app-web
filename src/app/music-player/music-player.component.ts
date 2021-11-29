@@ -25,7 +25,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   song: Song | null = null;
 
-  currentTime?: number;
+  currentTime: number = 0;
   duration?: number;
   progressPercent? : number;
 
@@ -56,6 +56,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
           }
 
           this.songId = songId
+
           this.songService.getById(songId)
           .subscribe(res => {
             this.songService.convertSingleAudio(res, this.sanitization);
@@ -103,6 +104,10 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   prevSong() {
+    if (this.currentTime > 3) {
+      this.songService.loadSong(this.songId, this.playlistId);
+      return;
+    }
     this.audioElementRef.nativeElement.pause();
     this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "previous").subscribe(song => {
       this.isPlayingSubscription.unsubscribe();

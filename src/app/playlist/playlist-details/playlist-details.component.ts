@@ -41,9 +41,8 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     })
  
     this.songService.currentSongId.subscribe(songId => this.currentSongId = songId);
-      
+    
     this.loadedPlaylistSubscription = this.songService.currentPlaylistId.subscribe(loadedPlaylistId => this.loadedPlaylistId = loadedPlaylistId);
- 
  }
 
   ngOnDestroy(): void {
@@ -63,8 +62,8 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
       return;
     } 
 
-    this.currentSongId = songId.toString();    
-    this.songService.loadSong(this.currentSongId, this.playlistId);    
+//    this.currentSongId = songId.toString();    
+    this.songService.loadSong(songId.toString(), this.playlistId);    
   }
 
   playOrPauseAlbum(): void {
