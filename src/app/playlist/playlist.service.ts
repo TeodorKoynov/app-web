@@ -32,6 +32,10 @@ export class PlaylistService {
     return this.http.get<Playlist>(this.getAllPath + id);
   }
 
+  public update(data: any) {
+    return this.http.put(this.createPath, data);
+  }
+
   public delete(id: number): Observable<any> {
     this.playlistDeletedSubject.next(id);
     return this.http.delete(this.getAllPath + id);

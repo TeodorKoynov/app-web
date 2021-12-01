@@ -93,6 +93,24 @@
     box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
 }
 
+.img-input {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border: none;
+    cursor: default;
+    text-indent: -999em;
+    outline: none;
+
+}
+
+.img-input#file-upload-button {
+    display: none;
+}
+
 .upload-container {
     position: absolute;
     inset: 0;
