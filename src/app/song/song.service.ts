@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, from, Observable, of, Subject } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Song } from '../models/Song';
 import { DomSanitizer } from '@angular/platform-browser';
+
+export interface LoadedSongInfo {
+  id: string,
+  playlistId: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
-  private songId = new BehaviorSubject('');
-  currentSongId = this.songId.asObservable();
+  private isSongPlaying = false;
+  private isLoadedSongPlayingSubject = new BehaviorSubject<boolean>(this.isSongPlaying);
 
-  private playlistId = new BehaviorSubject('');
-  currentPlaylistId = this.playlistId.asObservable();
+  get isLoadedSongPlaying(): Observable<boolean> {
+    return this.isLoadedSongPlayingSubject.asObservable();
+  }
 
-  private isPlayling = new BehaviorSubject(false);
-  isCurrentlyPlaying = this.isPlayling.asObservable();
+  private loadedSongSubject = new BehaviorSubject<LoadedSongInfo>({
+    id: '',
+    playlistId: ''
+  });
+
+  get loadedSong(): Observable<LoadedSongInfo> {
+    return this.loadedSongSubject.asObservable();
+  }
 
   private getAllPath: string = environment.apiUrl + "/songs/";
   private createPath: string = environment.apiUrl + "/songs";
@@ -46,13 +58,26 @@ export class SongService {
     return this.http.delete(this.getAllPath + id);
   }
 
-  public loadSong(songId: string, playlist: string) {
-    this.songId.next(songId);
-    this.playlistId.next(playlist);
+  public loadSong(songId: string, playlistId: string) {    
+    this.loadedSongSubject.next({
+      id: songId,
+      playlistId
+    });
   }
 
-  public playOrStop(isPlaying: boolean) {
-    this.isPlayling.next(isPlaying);
+  public toggleSongPlaying(): void {
+    this.isSongPlaying = !this.isSongPlaying;
+    this.isLoadedSongPlayingSubject.next(this.isSongPlaying);
+  }
+
+  startPlaying() {
+    this.isSongPlaying = true;
+    this.isLoadedSongPlayingSubject.next(this.isSongPlaying);
+  }
+
+  stopPlaying() {
+    this.isSongPlaying = false;
+    this.isLoadedSongPlayingSubject.next(this.isSongPlaying);
   }
 
   convertAudio(songs: Array<Song>, sanitization: DomSanitizer) {

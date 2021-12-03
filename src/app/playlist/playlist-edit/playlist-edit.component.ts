@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Playlist } from '../../models/Playlist';
 import { PlaylistService } from '../playlist.service';
+import { map, mergeMap } from 'rxjs/operators';
+import { SongService } from '../../song/song.service';
+
 
 @Component({
   selector: 'app-playlist-edit',
@@ -12,7 +16,12 @@ export class PlaylistEditComponent implements OnInit {
   playlist?: Playlist;
   playlistForm: FormGroup;
 
-  constructor(private fb:FormBuilder, private playlistService: PlaylistService, private cd : ChangeDetectorRef) { 
+  constructor(private fb:FormBuilder,
+      private songService: SongService,
+      private playlistService: PlaylistService,
+      private cd : ChangeDetectorRef,
+      private route: ActivatedRoute,
+      private router: Router) { 
     this.playlistForm = fb.group({
       'id' : [''],
       'title' : ['', [Validators.required, Validators.maxLength(40)]],
@@ -22,21 +31,30 @@ export class PlaylistEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.playlistService.getById("1").subscribe(playlist => {
-     this.playlist = playlist;
-     console.log(playlist);
-     this.playlistForm.controls['imageUrl'].setValue(playlist.imageUrl);
-     this.playlistForm.controls['title'].setValue(playlist.title);
-     this.playlistForm.controls['description'].setValue(playlist.desctiption);
-
-    })
+    this.route.parent?.params.pipe(
+      map(parentParams => parentParams?.id),
+      mergeMap(id => {
+        return this.playlistService.getById(id)
+      })
+    ).subscribe(playlist => {
+      this.playlist = playlist;
+      console.log(playlist);
+      this.playlistForm.controls['imageUrl'].setValue(playlist.imageUrl);
+      this.playlistForm.controls['title'].setValue(playlist.title);
+      this.playlistForm.controls['description'].setValue(playlist.desctiption);
+     });
   }
 
-  update() {
+  update(): void {
     if  (this.playlist !== undefined) {
       this.playlistForm.controls['id'].setValue(this.playlist.id); 
     }
-    this.playlistService.update(this.playlistForm.value).subscribe(res => console.log(res));
+    this.playlistService.update(this.playlistForm.value)
+    .subscribe(res => this.close());
+  }
+
+  close(): void {
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
 
   uploadImage(event: Event) : void {

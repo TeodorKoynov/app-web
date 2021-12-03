@@ -1,10 +1,10 @@
-import { NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Playlist } from '../../models/Playlist';
 import { SongService } from '../../song/song.service';
 import { PlaylistService } from '../playlist.service';
+import {concatMap, filter, map, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-playlist-details',
@@ -16,37 +16,48 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   playlistId: string = "";
 
   loadedPlaylistId?: string;
-  loadedPlaylistSubscription!: Subscription;
+  loadedSongSubscription!: Subscription;
 
-  currentSongId: string = "";
+  loadedSongId: string = "";
 
   isPlaying: boolean = false;
   isPlayingSubscription!: Subscription;
+  playlistUpdatedSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private playlistService: PlaylistService,
     private songService: SongService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(res => {
-      this.playlistId = res['id'];
-      this.playlistService.getById(this.playlistId).subscribe(playlist => {
-        this.playlist = playlist
-        console.log(this.playlist); 
-      })
-      this.isPlayingSubscription = this.songService
-        .isCurrentlyPlaying
-        .subscribe(isPlaying => this.isPlaying = isPlaying);
-    })
+    this.route.params.pipe(
+      map(routeParams => routeParams?.id),
+      tap(id => this.playlistId = id),
+      concatMap(() => {
+        return this.playlistService.getById(this.playlistId).pipe(
+          tap(playlist => this.playlist = playlist)
+        );
+      }),
+      concatMap(() => this.songService.isLoadedSongPlaying)      
+    )
+    .subscribe(isPlaying => this.isPlaying = isPlaying);
  
-    this.songService.currentSongId.subscribe(songId => this.currentSongId = songId);
-    
-    this.loadedPlaylistSubscription = this.songService.currentPlaylistId.subscribe(loadedPlaylistId => this.loadedPlaylistId = loadedPlaylistId);
+    this.loadedSongSubscription = this.songService.loadedSong.subscribe(loadedSong => {
+      this.loadedSongId = loadedSong.id;
+      this.loadedPlaylistId = loadedSong.playlistId;
+    });
+
+    this.playlistUpdatedSubscription = this.playlistService.playlistUpdated.pipe(
+      filter(playlistId => this.playlistId === playlistId.toString()),
+      switchMap(playlistId => this.playlistService.getById(playlistId.toString())),
+    ).subscribe(playlist => this.playlist = playlist);
  }
 
   ngOnDestroy(): void {
-    this.isPlayingSubscription.unsubscribe();
+    this.loadedSongSubscription?.unsubscribe();
+    this.isPlayingSubscription?.unsubscribe();
+    this.playlistUpdatedSubscription?.unsubscribe();
   }
 
   fetchPalylist(playlistId: string) {
@@ -56,23 +67,21 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   playOrPauseSong(songId: number): void {
-    if (this.currentSongId === songId.toString() && this.playlistId === this.loadedPlaylistId) {
-      this.isPlaying = !this.isPlaying;
-      this.songService.playOrStop(this.isPlaying)
+    if (this.loadedSongId === songId.toString() && this.playlistId === this.loadedPlaylistId) {
+      this.songService.toggleSongPlaying()
       return;
     } 
 
-//    this.currentSongId = songId.toString();    
     this.songService.loadSong(songId.toString(), this.playlistId);    
   }
 
   playOrPauseAlbum(): void {
-    if (this.currentSongId === undefined || this.playlistId !== this.loadedPlaylistId) {
+    if (this.loadedSongId === undefined || this.playlistId !== this.loadedPlaylistId) {
       const songId = this.playlist.songs[0].id.toString(); 
       this.songService.loadSong(songId, this.playlistId);
       return;
     }
 
-    this.playOrPauseSong(+this.currentSongId);
+    this.playOrPauseSong(+this.loadedSongId);
   }
 }

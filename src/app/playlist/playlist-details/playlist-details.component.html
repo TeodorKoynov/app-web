@@ -1,10 +1,10 @@
-<div class="playlist-container">
+<div class="playlist-container" *ngIf="playlist">
     <div class="playlist-info">
         <div>
             <img class="img" [src]="playlist.imageUrl">
         </div>
         <div class="credentials">
-            <div class="playlist-title">{{playlist.title}}</div>
+            <div class="playlist-title" style="cursor: pointer;" routerLink="edit">{{playlist.title}}</div>
             <div class="playlist-information">
                 <div class="creator">{{playlist.creatorName}}</div>
                 <div class="separator"></div>
@@ -37,14 +37,14 @@
         </div>
 
         <div *ngFor="let song of playlist.songs" class="table-row" aria-selected="false"
-         [ngClass]="{'active' : (this.currentSongId === song.id.toString() && this.playlistId === this.loadedPlaylistId)}">
+         [ngClass]="{'active' : (this.loadedSongId === song.id.toString() && this.playlistId === this.loadedPlaylistId)}">
             <div class="table-col-group">
                 <div class="table-col song-index" 
-                [ngClass]="{'hidden' : ((this.currentSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)}">{{song.index}}</div>
-                <img class="gif" *ngIf="((this.currentSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)" src="https://open.scdn.co/cdn/images/equaliser-animated-green.f93a2ef4.gif">
+                [ngClass]="{'hidden' : ((this.loadedSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)}">{{song.index}}</div>
+                <img class="gif" *ngIf="((this.loadedSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)" src="https://open.scdn.co/cdn/images/equaliser-animated-green.f93a2ef4.gif">
                 <i class="fas none" (click)="playOrPauseSong(song.id)" [ngClass]="{
-                    'fa-play' : ((this.currentSongId !== song.id.toString()) || ((this.currentSongId === song.id.toString()) && !this.isPlaying && this.playlistId === this.loadedPlaylistId) || this.playlistId !== this.loadedPlaylistId),
-                    'fa-pause': ((this.currentSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)
+                    'fa-play' : ((this.loadedSongId !== song.id.toString()) || ((this.loadedSongId === song.id.toString()) && !this.isPlaying && this.playlistId === this.loadedPlaylistId) || this.playlistId !== this.loadedPlaylistId),
+                    'fa-pause': ((this.loadedSongId === song.id.toString()) && this.isPlaying && this.playlistId === this.loadedPlaylistId)
                 }">
                 </i>
                 <img class="img img-small" [src]="song.imageUrl">
@@ -61,4 +61,5 @@
     </div>
 </div>
 
-<app-playlist-edit *ngIf="true"></app-playlist-edit>
+<!-- <app-playlist-edit *ngIf="true"></app-playlist-edit> -->
+<router-outlet></router-outlet>

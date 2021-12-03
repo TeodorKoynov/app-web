@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { concatMap, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { Song } from '../models/Song';
 import { PlaylistService } from '../playlist/playlist.service';
 import { SongService } from '../song/song.service';
@@ -14,16 +15,11 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
   @ViewChild('progressBarContainer') progressBarContainerElementRef!: ElementRef<HTMLElement>;
 
-  songId:string = '';
-  songIdSubscription!: Subscription;
-
-  playlistId:string = '';
-  playlistIdSubscription!: Subscription;
-
-  isPlaying: boolean = true;
-  isPlayingSubscription!: Subscription;
-
   song: Song | null = null;
+  songId:string = '';
+  playlistId:string = '';
+  isPlaying: boolean = true;;
+  loadedSongSubscription!: Subscription;
 
   currentTime: number = 0;
   duration?: number;
@@ -35,69 +31,47 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   constructor(private songService: SongService,
     private playlistService: PlaylistService, 
     private sanitization: DomSanitizer) {
-
-
    }
 
   ngOnInit(): void {
-
-    console.log("Initializing Music Player");
-    
-
-    this.songIdSubscription = this.songService
-      .currentSongId
-      .subscribe(songId => {
-
-        if (songId !== "")
-        {
-          if (songId !== this.songId && this.isPlayingSubscription !== undefined) 
-          {
-            this.isPlayingSubscription.unsubscribe();            
-          }
-
-          this.songId = songId
-
-          this.songService.getById(songId)
-          .subscribe(res => {
-            this.songService.convertSingleAudio(res, this.sanitization);
-                        
-            this.song = res;
-            this.audioElementRef.nativeElement.load();
-            this.progressPercent = 0;
-            this.isPlaying = true;
-            this.songService.playOrStop(this.isPlaying);
+    this.loadedSongSubscription = this.songService.loadedSong.pipe(
+        tap(loadedSongInfo => {
+          this.songId = loadedSongInfo.id,
+          this.playlistId = loadedSongInfo.playlistId;
+        }),
+        switchMap(() => this.songService.getById(this.songId).pipe(
+          tap(res => {
+            if (this.songId) {
+              this.songService.convertSingleAudio(res, this.sanitization);      
+              this.song = res;
+              // console.log(this.songId)
+              this.audioElementRef.nativeElement.load();
+              this.progressPercent = 0;
+              if (!this.isPlaying) {
+                this.songService.startPlaying();
+              }
+            }
           })
-          
-          this.isPlayingSubscription = this.songService
-          .isCurrentlyPlaying
-          .subscribe(isPlaying => {
-            this.isPlaying = isPlaying
-            console.log(this.isPlaying); 
+        )),
+        switchMap(() => this.songService.isLoadedSongPlaying.pipe(
+          tap(isPlaying => {
+            this.isPlaying = isPlaying;
+            // console.log(this.isPlaying ? "PLAYING" : "STOPPED"); 
             this.playOrPause();
-          });
-        }
-      });
-    
-    this.playlistIdSubscription = this.songService
-      .currentPlaylistId 
-      .subscribe(playlistId => {
-        this.playlistId = playlistId
-
-        console.log("SongId Subscription => 4");
-        
-      });
+          })
+        ))
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
-    this.songIdSubscription.unsubscribe();
-    this.playlistIdSubscription.unsubscribe();
-    this.isPlayingSubscription.unsubscribe();
+    this.loadedSongSubscription.unsubscribe();
   }
 
   nextSong() {    
     this.audioElementRef.nativeElement.pause();
-    this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "next").subscribe(song => {
-      this.isPlayingSubscription.unsubscribe();      
+    this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "next")
+    .subscribe(song => {
       this.songService.loadSong(song.id.toString(), this.playlistId);
       this.audioElementRef.nativeElement.pause();
     });
@@ -109,8 +83,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       return;
     }
     this.audioElementRef.nativeElement.pause();
-    this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "previous").subscribe(song => {
-      this.isPlayingSubscription.unsubscribe();
+    this.playlistService.SongFromPlaylistByAction(this.playlistId, this.songId, "previous")
+    .subscribe(song => {
       this.songService.loadSong(song.id.toString(), this.playlistId);
       this.audioElementRef.nativeElement.pause();
     });
@@ -133,8 +107,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   playOrPauseSong() {    
-    this.isPlaying = !this.isPlaying
-    this.songService.playOrStop(this.isPlaying);
+    this.songService.toggleSongPlaying();
   }
 
   setProgress(event: MouseEvent) {

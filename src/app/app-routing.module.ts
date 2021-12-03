@@ -9,6 +9,7 @@ import { SongDetailsComponent } from './song/song-details/song-details.component
 import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.component';
 import { PlaylistDetailsComponent } from './playlist/playlist-details/playlist-details.component';
 import { HomeComponent } from './home/home.component';
+import { PlaylistEditComponent } from './playlist/playlist-edit/playlist-edit.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,9 @@ const routes: Routes = [
   {path: 'song', component: SongListComponent, canActivate: [AuthGuardService], children: [
     {path: ':id', component: SongDetailsComponent}
   ]},
-  {path: 'playlist/:id', component: PlaylistDetailsComponent, canActivate: [AuthGuardService]}
+  {path: 'playlist/:id', component: PlaylistDetailsComponent, canActivate: [AuthGuardService], children: [
+    {path: 'edit', component: PlaylistEditComponent}
+  ]}
 ];
 
 @NgModule({
