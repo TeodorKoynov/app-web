@@ -27,13 +27,15 @@ ul ul li {
     transition: all ease-in-out 200ms;
     cursor: pointer;
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 .playlist a {
     font-size: 14px;
     color: #999;
     text-decoration: none;
-    text-transform: uppercase;
+    line-height: 20px;
+    font-weight: 500;
 }
 
 .playlist:hover a.playlist-content {

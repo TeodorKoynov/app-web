@@ -14,6 +14,7 @@ import { SongService } from '../song/song.service';
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
   @ViewChild('progressBarContainer') progressBarContainerElementRef!: ElementRef<HTMLElement>;
+  @ViewChild('volumeBarContainer') volumeBarContainerElementRef!: ElementRef<HTMLElement>;
 
   song: Song | null = null;
   songId:string = '';
@@ -24,6 +25,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   currentTime: number = 0;
   duration?: number;
   progressPercent? : number;
+
+  volume: number = 0.75;
+  volumePercent? : number = 75;
 
   durationDisplay: string = "0:00";
   currentTimeDisplay?: string = "0:00";
@@ -44,7 +48,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
             if (this.songId) {
               this.songService.convertSingleAudio(res, this.sanitization);      
               this.song = res;
-              // console.log(this.songId)
+              this.audioElementRef.nativeElement.volume = this.volume;
               this.audioElementRef.nativeElement.load();
               this.progressPercent = 0;
               if (!this.isPlaying) {
@@ -127,9 +131,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
     this.progressPercent = (this.currentTime / this.duration) * 100;
 
- //   console.log(this.duration);
- //   console.log(this.currentTime);
-
     if (!isNaN(this.duration))
     {
       this.durationDisplay = this.formatTime(this.duration);
@@ -148,5 +149,20 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
     const result = minutes.toString() + ":" + seconds.toString();
     return result;
+  }
+
+  setVolume(event: MouseEvent) {
+    const height = this.volumeBarContainerElementRef.nativeElement.clientHeight;
+    const clickY = event.offsetY;
+
+    this.volume = 1 - (clickY / height)
+    
+    if (clickY === -1) {
+      this.volume = 1
+    }
+
+    this.volumePercent = this.volume * 100;
+    
+    this.audioElementRef.nativeElement.volume = this.volume;
   }
 }

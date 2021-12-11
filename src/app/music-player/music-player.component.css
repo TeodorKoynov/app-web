@@ -43,6 +43,18 @@
     color: rgb(255, 255, 255);
 }
 
+.action-btn.action-btn-round:hover {
+    transform: scale(1.06);
+}
+
+.action-btn.action-btn-round:focus {
+    transform: scale(1.06);
+}
+
+.action-btn.action-btn-round:active {
+    transform: scale(1);
+}
+
 img {
     object-fit: cover;  
     width: 100%;
@@ -156,6 +168,17 @@ a {
     height: 50%;
     width: 100%;
     transition: width 0.1s linear;
+}
+
+.volume-bar-input {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    background-color: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 80px;
+    width: 45%;
 }
 
 .hidden{

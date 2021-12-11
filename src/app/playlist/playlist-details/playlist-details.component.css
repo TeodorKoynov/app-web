@@ -78,6 +78,18 @@
     height: 56px;
 }
 
+.action-btn.round:hover {
+    transform: scale(1.06);
+}
+
+.action-btn.round:focus {
+    transform: scale(1.06);
+}
+
+.action-btn.round:active {
+    transform: scale(1);
+}
+
 .table {
     display: flex;
     flex-direction: column;
