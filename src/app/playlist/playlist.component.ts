@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { concatMap, filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { Playlist } from '../models/Playlist';
 import { PlaylistService } from './playlist.service';
 
@@ -10,7 +10,7 @@ import { PlaylistService } from './playlist.service';
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.css']
 })
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent implements OnInit, OnDestroy {
   playlists?: Array<Playlist>
   playlistDeletedSubscription!: Subscription;
   playlistUpdatedSubscription!: Subscription;
@@ -18,6 +18,7 @@ export class PlaylistComponent implements OnInit {
 
   constructor(private playlistService: PlaylistService,
     private router: Router) { }
+
 
   ngOnInit(): void {
     this.fetchPlaylists();
@@ -29,6 +30,11 @@ export class PlaylistComponent implements OnInit {
     this.playlistUpdatedSubscription = this.playlistService.playlistUpdated.pipe(
       switchMap(async () => this.fetchPlaylists()),
     ).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.playlistDeletedSubscription?.unsubscribe();
+    this.playlistUpdatedSubscription?.unsubscribe();
   }
 
   fetchPlaylists(): void {

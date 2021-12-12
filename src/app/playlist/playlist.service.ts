@@ -47,7 +47,6 @@ export class PlaylistService {
   }
 
   public delete(id: number): Observable<any> {
-    this.playlistDeletedSubject.next(id);
     return this.http.delete(this.getAllPath + id)
       .pipe(
         tap(() => this.playlistDeletedSubject.next(id))

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../playlist.service';
 
@@ -8,6 +8,7 @@ import { PlaylistService } from '../playlist.service';
   styleUrls: ['./playlist-drop-down.component.css']
 })
 export class PlaylistDropDownComponent implements OnInit {
+  @ViewChild('dropDown') dropDown!: ElementRef;
   @Input() playlistId!: string
   constructor(private playlistService: PlaylistService,
     private router: Router)

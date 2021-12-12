@@ -16,7 +16,7 @@ export class PlaylistEditComponent implements OnInit {
   playlist?: Playlist;
   playlistForm: FormGroup;
 
-  constructor(private fb:FormBuilder,
+  constructor(private fb: FormBuilder,
       private songService: SongService,
       private playlistService: PlaylistService,
       private cd : ChangeDetectorRef,

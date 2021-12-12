@@ -1,10 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Playlist } from '../../models/Playlist';
 import { SongService } from '../../song/song.service';
 import { PlaylistService } from '../playlist.service';
 import {concatMap, filter, map, switchMap, tap} from 'rxjs/operators';
+import { UtilitiesService } from '../../services/utilities.service';
+import { PlaylistDropDownComponent } from '../playlist-drop-down/playlist-drop-down.component';
 
 @Component({
   selector: 'app-playlist-details',
@@ -12,8 +14,12 @@ import {concatMap, filter, map, switchMap, tap} from 'rxjs/operators';
   styleUrls: ['./playlist-details.component.css']
 })
 export class PlaylistDetailsComponent implements OnInit, OnDestroy {
+  @ViewChild('playlistDropDownElement') playlistDropDownElement!: PlaylistDropDownComponent;
+  @ViewChild('playlistDropDownButton') playlistDropDownButton!: ElementRef;
   playlist!: Playlist;
   playlistId: string = "";
+
+  isPlaylistDropDownShowing: boolean = false;
 
   loadedPlaylistId?: string;
   loadedSongSubscription!: Subscription;
@@ -23,12 +29,14 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   isPlaying: boolean = false;
   isPlayingSubscription!: Subscription;
   playlistUpdatedSubscription!: Subscription;
+  documentClickedTargetSubscription! : Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private playlistService: PlaylistService,
-    private songService: SongService) { }
+    private songService: SongService,
+    private utilitiesService: UtilitiesService) { }
 
   ngOnInit(): void {
     this.route.params.pipe(
@@ -52,12 +60,16 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
       filter(playlistId => this.playlistId === playlistId.toString()),
       switchMap(playlistId => this.playlistService.getById(playlistId.toString())),
     ).subscribe(playlist => this.playlist = playlist);
+
+    this.documentClickedTargetSubscription = this.utilitiesService.documentClickedTarget
+      .subscribe(target => this.playlistDropDownListener(target))
  }
 
   ngOnDestroy(): void {
     this.loadedSongSubscription?.unsubscribe();
     this.isPlayingSubscription?.unsubscribe();
     this.playlistUpdatedSubscription?.unsubscribe();
+    this.documentClickedTargetSubscription?.unsubscribe();
   }
 
   fetchPalylist(playlistId: string) {
@@ -84,4 +96,19 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
 
     this.playOrPauseSong(+this.loadedSongId);
   }
+
+  playlistDropDownListener(target: any) : void {
+    console.log(target);
+    
+    if (this.playlistDropDownElement?.dropDown?.nativeElement?.contains(target) || target === this.playlistDropDownButton?.nativeElement) {
+    }
+    else {
+      this.isPlaylistDropDownShowing = false;
+    }
+  }
+
+  toggle() {
+    this.isPlaylistDropDownShowing = !this.isPlaylistDropDownShowing;
+  }
+
 }
