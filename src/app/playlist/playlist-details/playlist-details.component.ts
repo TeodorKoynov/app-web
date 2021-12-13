@@ -100,7 +100,9 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   playlistDropDownListener(target: any) : void {
     console.log(target);
     
-    if (this.playlistDropDownElement?.dropDown?.nativeElement?.contains(target) || target === this.playlistDropDownButton?.nativeElement) {
+    if ((this.playlistDropDownElement?.dropDown?.nativeElement?.contains(target) 
+          && !this.playlistDropDownElement?.editButton?.nativeElement?.contains(target)) 
+        || target === this.playlistDropDownButton?.nativeElement) {
     }
     else {
       this.isPlaylistDropDownShowing = false;
@@ -111,4 +113,10 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     this.isPlaylistDropDownShowing = !this.isPlaylistDropDownShowing;
   }
 
+  passImage(event: Event) {
+    console.log(event);
+    setTimeout(() => {
+      this.utilitiesService.UploadedFileEvent(event);
+    }, 1000)
+  }
 }

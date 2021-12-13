@@ -1,27 +1,30 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Playlist } from '../../models/Playlist';
 import { PlaylistService } from '../playlist.service';
-import { map, mergeMap } from 'rxjs/operators';
+import { concatMap, debounceTime, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { SongService } from '../../song/song.service';
-
+import { Subscription } from 'rxjs';
+import { UtilitiesService } from '../../services/utilities.service';
 
 @Component({
   selector: 'app-playlist-edit',
   templateUrl: './playlist-edit.component.html',
   styleUrls: ['./playlist-edit.component.css']
 })
-export class PlaylistEditComponent implements OnInit {
+export class PlaylistEditComponent implements OnInit, OnDestroy {
   playlist?: Playlist;
   playlistForm: FormGroup;
+  uploadedFileEventSubscription!: Subscription;
 
   constructor(private fb: FormBuilder,
       private songService: SongService,
       private playlistService: PlaylistService,
       private cd : ChangeDetectorRef,
       private route: ActivatedRoute,
-      private router: Router) { 
+      private router: Router,
+      private utilitiesService: UtilitiesService) { 
     this.playlistForm = fb.group({
       'id' : [''],
       'title' : ['', [Validators.required, Validators.maxLength(40)]],
@@ -39,10 +42,18 @@ export class PlaylistEditComponent implements OnInit {
     ).subscribe(playlist => {
       this.playlist = playlist;
       console.log(playlist);
+      
       this.playlistForm.controls['imageUrl'].setValue(playlist.imageUrl);
       this.playlistForm.controls['title'].setValue(playlist.title);
       this.playlistForm.controls['description'].setValue(playlist.desctiption);
-     });
+    });
+
+    this.uploadedFileEventSubscription = this.utilitiesService.fileUploadedEvent.pipe(
+      switchMap(async (event) => this.uploadImage(event))
+    ).subscribe()
+  }
+  ngOnDestroy(): void {
+    this.uploadedFileEventSubscription?.unsubscribe();
   }
 
   update(): void {
