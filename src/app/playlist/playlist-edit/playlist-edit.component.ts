@@ -5,7 +5,7 @@ import { Playlist } from '../../models/Playlist';
 import { PlaylistService } from '../playlist.service';
 import { concatMap, debounceTime, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { SongService } from '../../song/song.service';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { UtilitiesService } from '../../services/utilities.service';
 
 @Component({
@@ -19,7 +19,6 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
   uploadedFileEventSubscription!: Subscription;
 
   constructor(private fb: FormBuilder,
-      private songService: SongService,
       private playlistService: PlaylistService,
       private cd : ChangeDetectorRef,
       private route: ActivatedRoute,
@@ -36,7 +35,7 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.parent?.params.pipe(
       map(parentParams => parentParams?.id),
-      mergeMap(id => {
+      concatMap(id => {        
         return this.playlistService.getById(id)
       })
     ).subscribe(playlist => {
@@ -52,7 +51,10 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
       switchMap(async (event) => this.uploadImage(event))
     ).subscribe()
   }
+  
   ngOnDestroy(): void {
+    console.log("Edit Destroyed");
+
     this.uploadedFileEventSubscription?.unsubscribe();
   }
 

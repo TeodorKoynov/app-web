@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { concatMap, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { SongService } from '../song/song.service';
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
   @ViewChild('progressBarContainer') progressBarContainerElementRef!: ElementRef<HTMLElement>;
-  @ViewChild('volumeBarContainer') volumeBarContainerElementRef!: ElementRef<HTMLElement>;
+  @ViewChild('volumeSliderProgress') volumeSliderProgressElementRef!: ElementRef<HTMLInputElement>;
 
   song: Song | null = null;
   songId:string = '';
@@ -27,7 +27,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   progressPercent? : number;
 
   volume: number = 0.75;
-  volumePercent? : number = 75;
+  volumePercent: number = 75;
 
   durationDisplay: string = "0:00";
   currentTimeDisplay?: string = "0:00";
@@ -151,18 +151,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  setVolume(event: MouseEvent) {
-    const height = this.volumeBarContainerElementRef.nativeElement.clientHeight;
-    const clickY = event.offsetY;
-
-    this.volume = 1 - (clickY / height)
-    
-    if (clickY === -1) {
-      this.volume = 1
-    }
-
-    this.volumePercent = this.volume * 100;
-    
+  setVolumeSlide(event: any) {
+    this.volume = event.target.value;
     this.audioElementRef.nativeElement.volume = this.volume;
+    this.volumePercent = this.volume * 100;
   }
 }
