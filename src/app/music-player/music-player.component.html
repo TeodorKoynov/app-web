@@ -20,9 +20,14 @@
             <div class="sound-control-container">
                 <div class="time-container">
                     <div class="current-time">{{currentTimeDisplay}}</div>
-                    <div (click)="setProgress($event)" class="progress-container" #progressBarContainer>
-                        <div [style.width.%]="progressPercent" class="custom-progress-bar"></div>
+
+                    <div class="progress-container">
+                        <div class="custom-progress-bar-container">
+                            <div class="custom-progress-bar" [style.width.%]="progressPercent"></div>
+                        </div>
+                        <input (input)="progressSlide($event)" (change)="setProgressFromSlide()" class="timeSlider" type="range" min="0" max="{{this.duration}}" value="{{this.sliderTime}}" step="1" #timeSlide>
                     </div>
+
                     <div class="total-time">{{durationDisplay}}</div>
                 </div>
         

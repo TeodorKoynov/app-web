@@ -7,7 +7,7 @@
         </button>
     </div>
 
-    <form [formGroup]="playlistForm" (ngSubmit)="update()">
+    <form [formGroup]="playlistForm" (ngSubmit)="update()" *ngIf="isLoaded">
         <div class="content-container">
 
             <div class="img-container">
@@ -44,7 +44,7 @@
         </div>
     </form>
 
-    <div class="footer">
+    <div class="footer" *ngIf="isLoaded">
         <p>By proceeding, you agree to give MyVibe access to the image you choose to upload. Please make sure you have the right to upload the image.</p>
     </div>
 </div>

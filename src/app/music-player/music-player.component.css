@@ -96,27 +96,75 @@ a {
 
 .time-container {
     display: flex;
-    flex-direction: row;
     width: 90%;
+    flex-direction: row;
     justify-content: center;
     align-items: center
 }
 
 .progress-container {
     display: flex;
-    background-color: #999;
+    position: relative;
+    height: 4px;
+    width: Calc(80% + 10px);
     border-radius: 5px;
     cursor: pointer;
-    height: 4px;
-    width: 80%;
+    flex-direction: row;
+}
+
+.custom-progress-bar-container {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 5px;
+    background-color: #999;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    margin: 0 5px;
 }
 
 .custom-progress-bar {
+    position: relative;
     background-color: black;
     border-radius: 5px;
     cursor: pointer;
     height: 100%;
     width: 0%;
+}
+
+.progress-container:hover .timeSlider::-webkit-slider-thumb{
+    background-color: black;
+    border: 1px solid black;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 50%);
+}
+
+.progress-container:hover .custom-progress-bar {
+    background-color: #1db954;
+}
+
+.timeSlider {
+    position: absolute;
+    transform: rotate(0deg);
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    background-color: transparent;
+    box-shadow: inset 0px 0px 4px rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.timeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    background: transparent;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
 }
 
 .current-time {
@@ -188,6 +236,7 @@ a {
     width: 12px;
     background: black;
     border-radius: 50%;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 50%);
     border: 1px solid black;
     cursor: pointer;
 }

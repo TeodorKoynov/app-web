@@ -14,9 +14,11 @@ import { UtilitiesService } from '../../services/utilities.service';
   styleUrls: ['./playlist-edit.component.css']
 })
 export class PlaylistEditComponent implements OnInit, OnDestroy {
+  isLoaded = false;
   playlist?: Playlist;
   playlistForm: FormGroup;
   uploadedFileEventSubscription!: Subscription;
+  paramsSubscription!: Subscription | undefined;
 
   constructor(private fb: FormBuilder,
       private playlistService: PlaylistService,
@@ -33,7 +35,7 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.parent?.params.pipe(
+    this.paramsSubscription = this.route.parent?.params.pipe(
       map(parentParams => parentParams?.id),
       concatMap(id => {        
         return this.playlistService.getById(id)
@@ -45,6 +47,7 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
       this.playlistForm.controls['imageUrl'].setValue(playlist.imageUrl);
       this.playlistForm.controls['title'].setValue(playlist.title);
       this.playlistForm.controls['description'].setValue(playlist.desctiption);
+      this.isLoaded = true;
     });
 
     this.uploadedFileEventSubscription = this.utilitiesService.fileUploadedEvent.pipe(
@@ -55,6 +58,7 @@ export class PlaylistEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log("Edit Destroyed");
 
+    this.paramsSubscription?.unsubscribe();
     this.uploadedFileEventSubscription?.unsubscribe();
   }
 

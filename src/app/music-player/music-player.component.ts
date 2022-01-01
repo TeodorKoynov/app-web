@@ -14,7 +14,7 @@ import { SongService } from '../song/song.service';
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audio') audioElementRef!: ElementRef<HTMLAudioElement>;
   @ViewChild('progressBarContainer') progressBarContainerElementRef!: ElementRef<HTMLElement>;
-  @ViewChild('volumeSliderProgress') volumeSliderProgressElementRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('timeSlide') timeSlideElementRef!: ElementRef<HTMLElement>;
 
   song: Song | null = null;
   songId:string = '';
@@ -22,15 +22,17 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   isPlaying: boolean = true;;
   loadedSongSubscription!: Subscription;
 
-  currentTime: number = 0;
-  duration?: number;
-  progressPercent? : number;
+  isSliding: boolean = false;
+  sliderTime: number = 0;
+  currentTime: number = 0; 
+  duration: number = 0;
+  progressPercent : number = 0;
 
   volume: number = 0.75;
   volumePercent: number = 75;
 
   durationDisplay: string = "0:00";
-  currentTimeDisplay?: string = "0:00";
+  currentTimeDisplay: string = "0:00";
 
   constructor(private songService: SongService,
     private playlistService: PlaylistService, 
@@ -60,7 +62,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         switchMap(() => this.songService.isLoadedSongPlaying.pipe(
           tap(isPlaying => {
             this.isPlaying = isPlaying;
-            // console.log(this.isPlaying ? "PLAYING" : "STOPPED"); 
             this.playOrPause();
           })
         ))
@@ -114,24 +115,29 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.songService.toggleSongPlaying();
   }
 
-  setProgress(event: MouseEvent) {
-    const width = this.progressBarContainerElementRef.nativeElement.clientWidth;
-    const clickX = event.offsetX;
+  progressSlide(event: any) {
+    this.sliderTime = event.target.value;   
+    this.progressPercent = (this.sliderTime / this.duration) * 100; 
+    this.currentTimeDisplay = this.formatTime(this.sliderTime); 
+    this.isSliding = true; 
+  }
 
-    if (this.duration === undefined) {
-      this.duration = 0;
-    }
-    
-    this.audioElementRef.nativeElement.currentTime = (clickX / width) * this.duration;
+  setProgressFromSlide() {
+    this.currentTime = this.sliderTime;
+    this.audioElementRef.nativeElement.currentTime = this.sliderTime;
+    this.isSliding = false;
   }
 
   updateProgress() {
     this.duration = this.audioElementRef.nativeElement.duration;
-    this.currentTime = this.audioElementRef.nativeElement.currentTime;
 
-    this.progressPercent = (this.currentTime / this.duration) * 100;
+    if (!this.isSliding)  {
+      this.currentTime = this.audioElementRef.nativeElement.currentTime;   
+      this.sliderTime = this.currentTime;   
+      this.progressPercent = (this.currentTime / this.duration) * 100;
+    }
 
-    if (!isNaN(this.duration))
+    if (!isNaN(this.duration) && !this.isSliding)
     {
       this.durationDisplay = this.formatTime(this.duration);
       this.currentTimeDisplay = this.formatTime(this.currentTime);
