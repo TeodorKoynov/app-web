@@ -6,10 +6,10 @@ export interface Song {
     description: string,
     imageUrl: string,
     audioFile: string,
+    duration: number,
+    totalTime: string,
     createdOn: Date,
     trustedAudioFile: SafeUrl,
     userName: string,
-    lenght: number,
     index: number,
-    duration: number
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { SongService } from '../song.service';
 
 @Component({
@@ -10,11 +11,14 @@ import { SongService } from '../song.service';
 export class SongFormComponent implements OnInit {
   songForm: FormGroup; 
 
-  constructor(private fb:FormBuilder, private songService: SongService, private cd : ChangeDetectorRef) { 
+  constructor(private fb:FormBuilder, 
+    private songService: SongService, 
+    private cd : ChangeDetectorRef) { 
     this.songForm = fb.group({
       'title' : ['', [Validators.required, Validators.maxLength(40)]],
       'description' : ['', [Validators.required, Validators.maxLength(2000)]],
       'imageUrl' : [''],
+      'duration': [],
       audioUrl : [null, [Validators.required]]
     })
   }
@@ -37,8 +41,21 @@ export class SongFormComponent implements OnInit {
     if ((event.target as HTMLInputElement).files! && (event.target as HTMLInputElement).files!.length) {  
       var file = (event.target as HTMLInputElement).files![0];
       reader.readAsDataURL(file);
-        
+      
       reader.onload = () => {
+        var objectURL = URL.createObjectURL(file);
+        var song = new Audio(objectURL);
+        song.addEventListener(
+          "canplaythrough",
+          () => {
+            URL.revokeObjectURL(objectURL);
+            this.songForm.patchValue({
+              duration: Math.floor(song.duration)
+            }); 
+            console.log("1 " + this.songForm.controls['duration'].value);        
+          },
+          false,);
+
         this.songForm.patchValue({
           audioUrl: reader.result
        });

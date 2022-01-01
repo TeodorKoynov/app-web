@@ -32,6 +32,7 @@ export class SongService {
   }
 
   private getAllPath: string = environment.apiUrl + "/songs/";
+  private getSongDetailsPath: string = environment.apiUrl + "/songs/details/"
   private createPath: string = environment.apiUrl + "/songs";
 
   private songDeletedSubject = new Subject<number>();
@@ -49,7 +50,11 @@ export class SongService {
     return this.http.get<Array<Song>>(this.getAllPath);
   }
 
-  public getById(id: string) : Observable<Song> {
+  public getSongDetailsById(id: string): Observable<Song> {
+    return this.http.get<Song>(this.getSongDetailsPath + id)
+  }
+
+  public playById(id: string) : Observable<Song> {
     return this.http.get<Song>(this.getAllPath + id);
   }
 

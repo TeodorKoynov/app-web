@@ -28,8 +28,10 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
 
   isPlaying: boolean = false;
   isPlayingSubscription!: Subscription;
+
   playlistUpdatedSubscription!: Subscription;
   documentClickedTargetSubscription! : Subscription;
+  paramsSubscription!: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,8 +40,8 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     private songService: SongService,
     private utilitiesService: UtilitiesService) { }
 
-  ngOnInit(): void {
-    this.route.params.pipe(
+  ngOnInit(): void {    
+    this.paramsSubscription = this.route.params.pipe(
       map(routeParams => routeParams?.id),
       tap(id => this.playlistId = id),
       concatMap(() => {
@@ -70,6 +72,7 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     this.isPlayingSubscription?.unsubscribe();
     this.playlistUpdatedSubscription?.unsubscribe();
     this.documentClickedTargetSubscription?.unsubscribe();
+    this.paramsSubscription?.unsubscribe();
   }
 
   fetchPalylist(playlistId: string) {

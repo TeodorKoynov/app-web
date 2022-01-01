@@ -6,9 +6,6 @@
         <img class="card-img-top" [src]="song.imageUrl">
         <div class="card-body">
           <h5 class="card-title">{{ song.title }}</h5>
-          <audio controls *ngIf="song.trustedAudioFile">
-            <source [src]="song.trustedAudioFile">
-        </audio>
         </div>
         <div>
           <p>{{song.description}}</p>

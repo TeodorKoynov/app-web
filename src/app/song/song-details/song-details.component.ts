@@ -21,8 +21,7 @@ export class SongDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(res => {
       this.id = res['id'];
-      this.songService.getById(this.id).subscribe(res => {
-        this.songService.convertSingleAudio(res, this.sanitization);
+      this.songService.getSongDetailsById(this.id).subscribe(res => {
         this.song = res;  
         console.log(this.song);   
       });

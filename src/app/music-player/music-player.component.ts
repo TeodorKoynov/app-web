@@ -39,17 +39,18 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     private sanitization: DomSanitizer) {
    }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.loadedSongSubscription = this.songService.loadedSong.pipe(
-        tap(loadedSongInfo => {
+        tap(loadedSongInfo => {          
           this.songId = loadedSongInfo.id,
           this.playlistId = loadedSongInfo.playlistId;
         }),
-        switchMap(() => this.songService.getById(this.songId).pipe(
-          tap(res => {
+        switchMap(() => this.songService.playById(this.songId).pipe(
+          tap(res => {            
             if (this.songId) {
               this.songService.convertSingleAudio(res, this.sanitization);      
               this.song = res;
+              this.durationDisplay = this.song.totalTime;
               this.audioElementRef.nativeElement.volume = this.volume;
               this.audioElementRef.nativeElement.load();
               this.progressPercent = 0;
@@ -139,7 +140,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
     if (!isNaN(this.duration) && !this.isSliding)
     {
-      this.durationDisplay = this.formatTime(this.duration);
       this.currentTimeDisplay = this.formatTime(this.currentTime);
     }
   }
