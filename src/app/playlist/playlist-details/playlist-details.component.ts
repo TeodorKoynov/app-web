@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Playlist } from '../../models/Playlist';
@@ -7,6 +7,7 @@ import { PlaylistService } from '../playlist.service';
 import {concatMap, filter, map, switchMap, tap} from 'rxjs/operators';
 import { UtilitiesService } from '../../services/utilities.service';
 import { PlaylistDropDownComponent } from '../playlist-drop-down/playlist-drop-down.component';
+import { SongDropDownComponent } from '../../song/song-drop-down/song-drop-down.component';
 
 @Component({
   selector: 'app-playlist-details',
@@ -16,10 +17,16 @@ import { PlaylistDropDownComponent } from '../playlist-drop-down/playlist-drop-d
 export class PlaylistDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('playlistDropDownElement') playlistDropDownElement!: PlaylistDropDownComponent;
   @ViewChild('playlistDropDownButton') playlistDropDownButton!: ElementRef;
+  @ViewChildren('songDropDownElement') songDropDownElement!: QueryList<SongDropDownComponent>;
+  @ViewChildren('songDropDownButton') songDropDownButton!: QueryList<ElementRef>;
+
   playlist!: Playlist;
   playlistId: string = "";
 
   isPlaylistDropDownShowing: boolean = false;
+
+  isSongDropDownShowing: boolean = false;
+  songDropDownId: string = "";
 
   loadedPlaylistId?: string;
   loadedSongSubscription!: Subscription;
@@ -64,7 +71,10 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     ).subscribe(playlist => this.playlist = playlist);
 
     this.documentClickedTargetSubscription = this.utilitiesService.documentClickedTarget
-      .subscribe(target => this.playlistDropDownListener(target))
+      .subscribe(target => {
+        this.playlistDropDownListener(target)
+        this.songDropDownListener(target)
+      })
  }
 
   ngOnDestroy(): void {
@@ -109,6 +119,31 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     }
     else {
       this.isPlaylistDropDownShowing = false;
+    }
+  }
+
+  songDropDownListener(target: any) : void {
+    const songDropDownElement = this.songDropDownElement.toArray()
+      .find(x => x.songId == this.songDropDownId) 
+
+    if ((songDropDownElement?.dropDown?.nativeElement?.contains(target) 
+          && !songDropDownElement.removeButton?.nativeElement?.contains(target))
+          || this.songDropDownButton?.toArray().find(x => x.nativeElement == target) !== undefined) {
+    }
+    else {
+      this.songDropDownId = "";
+      this.isSongDropDownShowing = false;
+    }
+  }
+  
+  toggleSongDropdown(songId: string) : void {
+    console.log(songId);
+    
+    if (this.songDropDownId != songId) {
+      this.songDropDownId = songId;
+      this.isSongDropDownShowing = true;
+    } else {
+      this.isSongDropDownShowing = !this.isSongDropDownShowing;
     }
   }
 

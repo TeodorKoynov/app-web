@@ -54,13 +54,19 @@ export class PlaylistService {
   }
 
   public addSongToPlaylist(playlistId: string, songId: string): Observable<any> {
-    const urlPath = `${this.getAllPath}/${playlistId}/${this.songPath}/${songId}`;
-    return this.http.post(urlPath, "");
+    const urlPath = `${this.getAllPath}${playlistId}${this.songPath}${songId}`;
+    return this.http.post(urlPath, "")
+      .pipe(
+        tap(() => this.playlistUpdatedSubject.next(+playlistId))
+      );
   }
 
   public removeSongFromPlaylist(playlistId: string, songId: string): Observable<any> {
-    const urlPath = `${this.getAllPath}/${playlistId}/${this.songPath}/${songId}`;
-    return this.http.delete(urlPath);
+    const urlPath = `${this.getAllPath}${playlistId}${this.songPath}${songId}`;
+    return this.http.delete(urlPath)
+      .pipe(
+        tap(() => this.playlistUpdatedSubject.next(+playlistId))
+      );
   }
 
   public SongFromPlaylistByAction(playlistId: string, songId: string, action: string): Observable<Song> {
