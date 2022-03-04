@@ -124,11 +124,13 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
 
   songDropDownListener(target: any) : void {
     const songDropDownElement = this.songDropDownElement.toArray()
-      .find(x => x.songId == this.songDropDownId) 
+      .find(x => x.songId == this.songDropDownId);      
 
     if ((songDropDownElement?.dropDown?.nativeElement?.contains(target) 
-          && !songDropDownElement.removeButton?.nativeElement?.contains(target))
-          || this.songDropDownButton?.toArray().find(x => x.nativeElement == target) !== undefined) {
+          && !songDropDownElement.removeButton?.nativeElement?.contains(target)
+          && !songDropDownElement.createButton?.nativeElement?.contains(target)
+          && !songDropDownElement.addButton?.toArray().find(x => x.nativeElement == target))
+          || this.songDropDownButton?.toArray().find(x => x.nativeElement == target) !== undefined) {                        
     }
     else {
       this.songDropDownId = "";
@@ -136,9 +138,7 @@ export class PlaylistDetailsComponent implements OnInit, OnDestroy {
     }
   }
   
-  toggleSongDropdown(songId: string) : void {
-    console.log(songId);
-    
+  toggleSongDropdown(songId: string) : void {    
     if (this.songDropDownId != songId) {
       this.songDropDownId = songId;
       this.isSongDropDownShowing = true;

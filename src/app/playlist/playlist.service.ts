@@ -17,12 +17,12 @@ export class PlaylistService {
   private songPath: string = "/song/"
   private playlistDeletedSubject = new Subject<number>();
   private playlistUpdatedSubject = new Subject<number>();
-  //private playlistCreatedSubject = new Subject<number>();
+  private playlistCreatedSubject = new Subject<number>();
 
 
   playlistDeleted = this.playlistDeletedSubject.asObservable();
   playlistUpdated = this.playlistUpdatedSubject.asObservable();
-  //playlistCreated = this.playlistCreatedSubject.asObservable();
+  playlistCreated = this.playlistCreatedSubject.asObservable();
 
 
   constructor(private http: HttpClient, private authService: AuthService) { }
@@ -33,6 +33,9 @@ export class PlaylistService {
 
   public create(): Observable<number> {
     return this.http.post<number>(this.createPath, {})
+      .pipe(
+        tap((id) => this.playlistCreatedSubject.next(id))
+      );
   }
 
   public getById(id: string): Observable<Playlist> {

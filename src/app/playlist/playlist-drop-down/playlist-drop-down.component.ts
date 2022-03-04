@@ -11,6 +11,7 @@ export class PlaylistDropDownComponent implements OnInit {
   @ViewChild('dropDown') dropDown!: ElementRef;
   @ViewChild('editButton') editButton!: ElementRef;
   @Input() playlistId!: string
+
   constructor(private playlistService: PlaylistService,
     private router: Router)
   { }
@@ -25,5 +26,4 @@ export class PlaylistDropDownComponent implements OnInit {
       this.router.navigateByUrl('/');
     })
   }
-
 }

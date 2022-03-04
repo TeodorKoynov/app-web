@@ -14,6 +14,8 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   playlists?: Array<Playlist>
   playlistDeletedSubscription!: Subscription;
   playlistUpdatedSubscription!: Subscription;
+  playlistCreatedSubscription!: Subscription;
+
 
 
   constructor(private playlistService: PlaylistService,
@@ -30,6 +32,11 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     this.playlistUpdatedSubscription = this.playlistService.playlistUpdated.pipe(
       switchMap(async () => this.fetchPlaylists()),
     ).subscribe();
+
+    this.playlistCreatedSubscription = this.playlistService.playlistCreated.pipe(
+      switchMap(async () => this.fetchPlaylists()),
+    ).subscribe();
+
   }
 
   ngOnDestroy(): void {
@@ -47,7 +54,6 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   create() {
     this.playlistService.create().subscribe(id =>
       {
-        this.fetchPlaylists();
         this.router.navigate(['/playlist', id]);
       });
   }

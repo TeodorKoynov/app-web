@@ -16,9 +16,24 @@
                 <a>Remove from this playlist</a>
             </div>
         </div>
-        <div class="wrapper">
+        <div class="wrapper slider-container">
             <div class="drow-down-item">
                 <a>Add to playlist</a>
+                <svg class="slider__svg" role="img" height="16" width="16" viewBox="0 0 16 16"><path d="M14 10L8 4l-6 6h12z"></path></svg>
+            </div>
+            
+            <div class="slider">
+                <ul class="slider__content">
+                    <div (click)="createPlaylistWithSong()" class="drow-down-item" #createButton>
+                        <a>Add to new playlist</a>
+                    </div>
+                    <div *ngIf="playlists" class="separator"></div>
+                    <div *ngFor="let playlist of playlists">
+                        <div (click)="addToPlaylist(playlist.id.toString())" class="drow-down-item"  #addButton>
+                            <a>{{ playlist.title }}</a>
+                        </div>
+                    </div>
+                </ul>
             </div>
         </div>
     </div>
