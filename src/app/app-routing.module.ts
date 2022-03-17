@@ -10,6 +10,8 @@ import { SongTopChartComponent } from './song/song-top-chart/song-top-chart.comp
 import { PlaylistDetailsComponent } from './playlist/playlist-details/playlist-details.component';
 import { HomeComponent } from './home/home.component';
 import { PlaylistEditComponent } from './playlist/playlist-edit/playlist-edit.component';
+import { CollectionComponent } from './collection/collection.component';
+import { SongsCollectionComponent } from './collection/songs-collection/songs-collection.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,9 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'topchart', component: SongTopChartComponent, canActivate: [AuthGuardService]},
+  {path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService], children: [
+    {path: 'songs', component: SongsCollectionComponent}
+  ]},
   {path: 'song/create', component: SongFormComponent, canActivate: [AuthGuardService]},
   {path: 'song', component: SongListComponent, canActivate: [AuthGuardService], children: [
     {path: ':id', component: SongDetailsComponent}

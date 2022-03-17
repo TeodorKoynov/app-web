@@ -1,0 +1,34 @@
+<div class="container">
+
+    <div class="song transparent-bg">
+        <div routerLink="song/create" class="song-tumbnail dark">
+            <svg routerLink="/song/create" class="song-img svg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+
+        <div class="credentials">
+            <h5 class="song-title">Add Song</h5>
+            <div class="wrapper">
+                <a class="song-creator"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="song" *ngFor="let song of songs">
+        <div class="song-tumbnail">
+            <img class="song-img" [src]="song.imageUrl">
+            
+            <div class="play-button" (click)="LoadSong(song.id, null)">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+        
+        <div class="credentials">
+            <h5 class="song-title">{{ song.title }}</h5>
+            <div class="wrapper">
+                <a class="song-creator">{{ song.userName}}</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="song transparent"></div>
+</div>

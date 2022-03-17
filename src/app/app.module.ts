@@ -26,6 +26,8 @@ import { HomeComponent } from './home/home.component';
 import { PlaylistEditComponent } from './playlist/playlist-edit/playlist-edit.component';
 import { PlaylistDropDownComponent } from './playlist/playlist-drop-down/playlist-drop-down.component';
 import { SongDropDownComponent } from './song/song-drop-down/song-drop-down.component';
+import { CollectionComponent } from './collection/collection.component';
+import { SongsCollectionComponent } from './collection/songs-collection/songs-collection.component';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { SongDropDownComponent } from './song/song-drop-down/song-drop-down.comp
     PlaylistEditComponent,
     PlaylistDropDownComponent,
     SongDropDownComponent,
+    CollectionComponent,
+    SongsCollectionComponent,
   ],
   imports: [
     BrowserModule,

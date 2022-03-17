@@ -1,0 +1,37 @@
+ul,
+ul li,
+ul ul li {
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.link {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+
+.link a {
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    color: #999;
+    text-decoration: none;
+    text-transform: capitalize;
+    border-radius: 0.25rem;
+}
+
+.active {
+    background-color: rgb(233, 233, 233);
+    color: #189a2e!important;
+    font-weight: 600!important;
+}

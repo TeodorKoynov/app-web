@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { SongService } from '../song.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class SongFormComponent implements OnInit {
 
   constructor(private fb:FormBuilder, 
     private songService: SongService, 
+    private router: Router,
     private cd : ChangeDetectorRef) { 
     this.songForm = fb.group({
       'title' : ['', [Validators.required, Validators.maxLength(40)]],
@@ -30,7 +32,7 @@ export class SongFormComponent implements OnInit {
     console.log(this.songForm.value);
     
     this.songService.create(this.songForm.value).subscribe(res => {
-      console.log(res);
+      this.router.navigate(["/collection/songs"])
     });
   }
 

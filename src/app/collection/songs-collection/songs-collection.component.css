@@ -1,0 +1,157 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0 1.25rem 0 0;
+    gap: 1.5rem;
+}
+
+.song {
+
+    max-width: 250px;
+    width: 10%;
+    min-width: 210px;
+    min-height: 240px;
+    background-color: rgb(233, 233, 233);
+    padding: 1rem;
+    border-radius: 0.425rem;
+    flex-grow: 1;
+
+    /*-------------------------------------------*\
+
+    max-width: 300px;
+    width: 10%;
+    min-width: 210px;
+    min-height: 240px;
+    background-color: rgb(233, 233, 233);
+    padding: 1rem;
+    border-radius: 0.425rem;
+    flex-grow: 1;
+    \*-------------------------------------------*/
+
+    /*-------------------------------------------*\
+    max-width: 300px;
+    width: 20%;
+    min-width: 210px;
+    min-height: 240px;
+    background-color: rgb(233, 233, 233);
+    padding: 1rem;
+    border-radius: 0.425rem;
+    flex-grow: 1;
+    \*-------------------------------------------*/
+
+
+    /*-------------------------------------------*\
+    max-width: 390px;
+    width: 30%;
+    min-width: 230px;
+    min-height: 240px;
+    background-color: rgb(233, 233, 233);
+    padding: 1rem;
+    border-radius: 0.425rem;
+    flex-grow: 1;
+    \*-------------------------------------------*/
+}
+
+.song-tumbnail {
+    position: relative;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 5%;
+}
+
+.song-tumbnail:hover .play-button {
+    display: flex;
+}
+
+.song-tumbnail:hover .song-img {
+    filter: brightness(50%);
+}
+
+.song-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  
+    border-radius: 5%;
+    filter: brightness(100%);
+    transition: all ease-in-out 250ms;
+}
+
+.play-button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%, -50%);
+    color: whitesmoke;
+    cursor: pointer;
+    transition: all ease-in-out 250ms;
+}
+
+.play-button:hover {
+    color: #1db954;
+}
+
+ul,
+ul li,
+ul ul li {
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
+.credentials {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.song-creator {
+    cursor: pointer;
+    font-size: 16px;
+    color: #999;
+    text-decoration: none;
+}
+
+.song-creator:hover {
+    color: rgb(29, 29, 29);
+}
+
+.song-title {
+    color: rgb(54, 54, 54);
+    cursor: pointer;
+    margin: 0;
+}
+
+.song-title:hover {
+    color: rgb(0, 0, 0);
+}
+
+.wrapper {
+    display: flex;
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+.dark {
+    background-color:rgb(233, 233, 233);
+}
+
+.svg {
+    fill:rgb(126 126 126);
+    cursor: pointer;
+}
+
+.transparent-bg {
+    background: transparent;
+}
+

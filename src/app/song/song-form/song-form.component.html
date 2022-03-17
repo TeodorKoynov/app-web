@@ -1,48 +1,48 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-4"></div>
-        <div class="col-lg-4">
-            <form [formGroup]="songForm" (ngSubmit)="create()">
-                <div class="mb-3">
-                  <label class="form-label">Title</label>
-                  <input type="text" class="form-control" formControlName="title">
-                </div>
-                <div *ngIf="title.touched && title.errors?.required" class="alert alert-danger">
-                    Title is required!
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" rows="3" formControlName="description"></textarea>
-                  </div>
-                  <div *ngIf="description.touched && description.errors?.required" class="alert alert-danger">
-                    Description is required!
-                  </div>
+<div class="container">
+  <form [formGroup]="songForm" (ngSubmit)="create()">
+    <div class="form-container">
 
-                <div class="mb-3">
-                  <label class="form-label">ImageUrl</label>
-                  <input type="file"
-                   class="form-control" 
-                   accept="image/.jpg, image/.jpeg, image/.png"
-                   (change)="uploadImage($event)">  
-                   <button type="button" class="btn btn-sm btn-default" >clear file</button>   
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">AudioUrl</label>
-                    <input type="file"
-                     id="audioUrl" name="audioUrl"
-                      class="form-control" 
-                      (change)="uploadAudio($event)">     
-                      <button type="button" class="btn btn-sm btn-default" >clear file</button>
-                  </div>
-                  <div *ngIf="audioUrl.touched && audioUrl.errors?.required" class="alert alert-danger">
-                    AudioUrl is required!
-                  </div>
-
-
-                <button type="submit" class="btn btn-success">Submit</button>
-                </form>
+      <div class="title-container">
+        <label class="form-label label">Title</label>
+        <input type="text" class="form-control" formControlName="title">
+        <div *ngIf="title.touched && title.errors?.required" class="alert alert-danger">
+          Title is required!
         </div>
-        <div class="col-lg-4"></div>
+      </div>
+
+      <div class="description-container">
+          <label class="form-label label">Description</label>
+          <textarea class="form-control" rows="3" formControlName="description"></textarea>
+          <div *ngIf="description.touched && description.errors?.required" class="alert alert-danger">
+            Description is required!
+          </div>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label label">ImageUrl</label>
+        <input type="file"
+         class="form-control" 
+         accept="image/.jpg, image/.jpeg, image/.png"
+         (change)="uploadImage($event)">  
+         <button type="button" class="btn btn-sm btn-default" >clear file</button>   
+      </div>
+  
+      <div class="mb-3">
+          <label class="form-label label">AudioUrl</label>
+          <input type="file"
+           id="audioUrl" name="audioUrl"
+            class="form-control" 
+            (change)="uploadAudio($event)">     
+            <button type="button" class="btn btn-sm btn-default" >clear file</button>
+        </div>
+        <div *ngIf="audioUrl.touched && audioUrl.errors?.required" class="alert alert-danger">
+          AudioUrl is required!
+        </div>
+  
+        <div class="button-container">
+          <button type="submit" class="button">CREATE</button>
+          <button type="submit" routerLink="/collection/songs" class="button info">CANCEL</button>
+        </div>
     </div>
+  </form>
 </div>
