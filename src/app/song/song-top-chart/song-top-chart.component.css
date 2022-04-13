@@ -1,52 +1,55 @@
 .song-top-chart-title {
-    font-size: 24px;
-    font-weight: bold;
-    padding-bottom: 12px;
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 12px;
 }
 
 .song-top-chart-content {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .song {
-    position: relative;
-    margin-right: 15px;
-    width: 300px;
-    height: 320px;
+  position: relative;
+  margin-right: 15px;
+  width: 300px;
+  height: 320px;
 }
 
 .song-tumbnail:hover .play-button {
-    display: flex;
+  display: flex;
 }
 
 .song-tumbnail:hover .song-img {
-    filter: brightness(50%);
+  filter: brightness(50%);
 }
 
 .play-button {
-    display: none;
-    position: absolute;
-    top: 120px;
-    left: 140px;
-    font-size: 50px;
-    transform: translate(-20px, -10px);
-    color: whitesmoke;
-    cursor: pointer;
-    transition: all ease-in-out 250ms;
+  display: none;
+  position: absolute;
+  top: 120px;
+  left: 140px;
+  font-size: 50px;
+  transform: translate(-20px, -10px);
+  color: whitesmoke;
+  cursor: pointer;
+  transition: all ease-in-out 250ms;
 }
 
 .play-button:hover {
-    color: #1db954;
+  color: #1db954;
 }
 
 .song-img {
-    object-fit: cover;  
-    width: 100%;
-    height: 260px;
-    border-radius: 5%;
-    filter: brightness(100%);
-    transition: all ease-in-out 250ms;
+  object-fit: cover;
+  width: 100%;
+  height: 260px;
+  border-radius: 5%;
+  filter: brightness(100%);
+  transition: all ease-in-out 250ms;
 }
 
 ul,
@@ -58,32 +61,32 @@ ul ul li {
 }
 
 .credentials {
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
 }
 
 .song-creator {
-    cursor: pointer;
-    font-size: 16px;
-    color: #999;
-    text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  text-decoration: none;
 }
 
 .song-creator:hover {
-    color: rgb(29, 29, 29);
+  color: rgb(29, 29, 29);
 }
 
 .song-title {
-    color: rgb(54, 54, 54);
-    cursor: pointer;
-    margin: 0;
+  color: rgb(54, 54, 54);
+  cursor: pointer;
+  margin: 0;
 }
 
 .song-title:hover {
-    color: rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
 }
 
 .wrapper {
-    display: flex;
+  display: flex;
 }
